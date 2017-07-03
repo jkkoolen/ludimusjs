@@ -1,0 +1,22 @@
+<table class="table table-striped table-bordered table-hover" *ngIf="tickets">
+  <thead>
+  <tr>
+    <th>invoiceNumber</th>
+    <th>income</th>
+    <th nowrap="true">last updated</th>
+    <th>decsription</th>
+    <th>price</th>
+    <th>vat</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let ticket of tickets" (click)="onSelect(ticket)">
+    <td>{{ticket.invoiceNumber}}</td>
+    <td>{{ticket.income?'+':'-'}}</td>
+    <td>{{ticket.lastUpdated | date}}</td>
+    <td>{{ticket.description}}</td>
+    <td>{{ticket.price}}</td>
+    <td>{{ticket.vatRate}}</td>
+  </tr>
+  </tbody>
+</table>
