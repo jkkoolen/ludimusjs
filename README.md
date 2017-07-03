@@ -1,1 +1,1 @@
-# ludimusjs
+# ludimus-gui
