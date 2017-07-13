@@ -1,21 +1,13 @@
-<app-notification></app-notification>
 <h3>
     Ludimus.
+    <notification></notification>
 </h3>
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <!--<div class="collapse navbar-collapse">-->
-            <ul class="nav navbar-nav">
-                <li><a class="glyphicon glyphicon-home" [routerLink]="['home']"></a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Modulen <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a [routerLink]="['tax']">Belasting</a></li>
-                    </ul>
-                </li>
-            </ul>
-        <!--</div>&lt;!&ndash; /.navbar-collapse &ndash;&gt;-->
-    </div><!-- /.container-fluid -->
-</nav>
+<md-toolbar>
+    <button md-button [routerLink]="['home']"><md-icon>home</md-icon></button>
+    <button md-button [mdMenuTriggerFor]="menu">Modulen</button>
+    <md-menu #menu="mdMenu">
+        <button md-button [routerLink]="['tax']">Belasting</button>
+    </md-menu>
+</md-toolbar>
+
 <router-outlet></router-outlet>

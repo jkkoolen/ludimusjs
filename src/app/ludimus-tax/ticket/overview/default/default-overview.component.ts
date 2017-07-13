@@ -1,16 +1,20 @@
-import {Component, Input} from '@angular/core';
-import {Ticket} from "../../ticket.component";
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {TicketDataSource} from "../ticket-database";
+import {setInterval} from "timers";
 
 @Component({
   selector: 'default-overview',
-  templateUrl: './default-overview.component.html'
+  templateUrl: './default-overview.component.html',
+  styleUrls: ['default-overview.component.css']
 })
-export class DefaultOverviewComponent {
-  @Input()
-  tickets: Array<Ticket>;
+export class DefaultOverviewComponent implements OnDestroy {
   @Input()
   onSelect: Function;
+  @Input()
+  dataSource: TicketDataSource;
 
-  constructor() { }
-
+  ngOnDestroy(): void {
+    this.dataSource.disconnect();
+  }
 }
+

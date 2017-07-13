@@ -1,12 +1,14 @@
-import {Component, Input, OnInit, OnChanges} from '@angular/core';
+import {Component, Input, OnInit, OnChanges, OnDestroy} from '@angular/core';
+import {TicketDataSource} from "../ticket-database";
 import {Ticket} from "../../ticket.component";
 
 @Component({
   selector: 'tax-overview',
   templateUrl: './tax-overview.component.html'
 })
-export class TaxOverviewComponent implements OnInit, OnChanges {
+export class TaxOverviewComponent implements OnInit, OnDestroy {
   @Input()
+  dataSource: TicketDataSource;
   tickets: Array<Ticket>;
   results: {debit21: number, credit21: number,
             debit6: number, credit6: number,
@@ -16,14 +18,15 @@ export class TaxOverviewComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.setResults();
+    this.dataSource.connect().subscribe(object=>{
+      this.tickets = object;
+      this.setResults();
+    });
+  }
+  ngOnDestroy(): void {
+    this.dataSource.disconnect();
   }
 
-  ngOnChanges(changes) : void {
-    if(changes.tickets) {
-      this.setResults();
-    }
-  }
 
   private setResults() : void {
     this.results = {debit21 : this.getDebit(21), credit21 : this.getCredit(21),

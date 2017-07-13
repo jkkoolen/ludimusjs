@@ -1,22 +1,36 @@
-<table class="table table-striped table-bordered table-hover" *ngIf="tickets">
-  <thead>
-  <tr>
-    <th>invoiceNumber</th>
-    <th>income</th>
-    <th nowrap="true">last updated</th>
-    <th>decsription</th>
-    <th>price</th>
-    <th>vat</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let ticket of tickets" (click)="onSelect(ticket)">
-    <td>{{ticket.invoiceNumber}}</td>
-    <td>{{ticket.income?'+':'-'}}</td>
-    <td>{{ticket.lastUpdated | date}}</td>
-    <td>{{ticket.description}}</td>
-    <td>{{ticket.price}}</td>
-    <td>{{ticket.vatRate}}</td>
-  </tr>
-  </tbody>
-</table>
+<div class="table-container mat-elevation-z8">
+<md-table [dataSource]="dataSource">
+  <ng-container cdkColumnDef="invoiceNumber">
+    <md-header-cell *cdkHeaderCellDef> Factuurnummer </md-header-cell>
+    <md-cell *cdkCellDef="let row" style="text-decoration:underline;cursor: pointer" (click)="onSelect(row)"> {{row.invoiceNumber}} </md-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="income">
+    <md-header-cell *cdkHeaderCellDef> Bij/Af </md-header-cell>
+    <md-cell *cdkCellDef="let row" style.color="{{row.income?'green':'red'}}"> {{row.income ? 'Bij' : 'Af'}} </md-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="ticketDate">
+    <md-header-cell *cdkHeaderCellDef> Factuurdatum </md-header-cell>
+    <md-cell *cdkCellDef="let row"> {{row.ticketDate | date}} </md-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="description">
+    <md-header-cell *cdkHeaderCellDef style="flex: 4">Omschrijving</md-header-cell>
+    <md-cell *cdkCellDef="let row" style="flex: 4"> {{row.description}} </md-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="price">
+    <md-header-cell *cdkHeaderCellDef>Bedrag</md-header-cell>
+    <md-cell *cdkCellDef="let row"> {{row.price | currency:'EUR':true }} </md-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="vatRate">
+    <md-header-cell *cdkHeaderCellDef>BTW</md-header-cell>
+    <md-cell *cdkCellDef="let row"> {{row.vatRate}} </md-cell>
+  </ng-container>
+
+  <md-header-row *cdkHeaderRowDef="['invoiceNumber', 'income', 'ticketDate', 'description', 'price', 'vatRate']"></md-header-row>
+  <md-row *cdkRowDef="let row; columns: ['invoiceNumber', 'income', 'ticketDate', 'description', 'price', 'vatRate'];"></md-row>
+</md-table>
+</div>

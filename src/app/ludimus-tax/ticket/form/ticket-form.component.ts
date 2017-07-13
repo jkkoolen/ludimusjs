@@ -1,32 +1,28 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TicketService} from '../service/ticket.service';
 import {Ticket} from '../ticket.component';
 import {NotificationService} from "../../../notification/notification.service";
+import {LoaderService} from "../../../loader/loader.service";
 
 @Component({
     selector: 'ticket-form',
     templateUrl: 'ticket-form.component.html' ,
-    styleUrls:['ticket-form.component.css'],
     providers: [TicketService]
 })
-export class TicketFormComponent {
-    model = new Ticket();
+export class TicketFormComponent implements OnInit{
+    model:Ticket;
     constructor(private ticketService: TicketService,
-      private notificationService: NotificationService) {
+                private loaderService: LoaderService,
+                private notificationService: NotificationService) {
 
     }
 
-    set ticketDate(e:string){
-        let splitted = e.split('-');
-        this.model.ticketDate = new Date(Date.UTC(Number(splitted[0]), Number(splitted[1])-1, Number(splitted[2])));
+    ngOnInit(): void {
+        this.model  = new Ticket();
     }
 
-    get ticketDate(){
-        return this.model.ticketDate.toISOString().substring(0, 10);
-    }
-
-    forMonthChanged():void {
-        this.model.forMonth = Number(this.model.forMonth);
+    forMonthChanged(value):void {
+        this.model.forMonth = value;
     }
 
     monthLabel(month):string {
@@ -65,10 +61,18 @@ export class TicketFormComponent {
 
     onSubmit(event:Event) {
         event.preventDefault();
+        this.loaderService.setVisible(true);
         this.ticketService.addTicket(this.model).
             subscribe(
-                ticket  => {this.notificationService.success("Invoice stored successfull"); this.model = new Ticket();},
-                error =>  {this.notificationService.danger(error)});
+                ticket  => {
+                    this.loaderService.setVisible(false);
+                    this.notificationService.success("Invoice stored successfull");
+                    this.model = new Ticket();
+                },
+                error =>  {
+                    this.loaderService.setVisible(false);
+                    this.notificationService.danger(JSON.stringify(error));
+                });
         return true;
     }
 }

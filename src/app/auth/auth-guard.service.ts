@@ -37,13 +37,17 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   }
 
   reject(error: Response|any) {
-    return error.json() || {};
+    if (error.constructor.name === 'TimeoutError') {
+      return Observable.throw({error:"TIMEOUT_ERROR"});
+    }
+    return Observable.throw( error.json() || {});
   }
 
   login (login: Login): Observable<Object> {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     return this.http.post(this.url + 'login', login, options)
+        .timeout(8000)
         .map(this.resolve)
         .catch(this.reject);
   }

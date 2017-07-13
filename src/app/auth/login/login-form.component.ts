@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import {Login} from "./login.component";
 import {AuthGuard} from "../auth-guard.service";
+import {LoaderService} from "../../loader/loader.service";
+import {NotificationService} from "../../notification/notification.service";
 
 @Component({
     selector: 'login-form',
@@ -8,19 +10,26 @@ import {AuthGuard} from "../auth-guard.service";
 })
 export class LoginFormComponent {
     model = new Login();
-    constructor(private auth: AuthGuard) {
+    constructor(private auth: AuthGuard,
+                private  notificationService: NotificationService,
+                private loaderService:LoaderService) {
 
     }
 
     onSubmit(event:Event) {
         event.preventDefault();
+        this.loaderService.setVisible(true);
         this.auth.login(this.model).
             subscribe(
                 object  => {
+                    this.loaderService.setVisible(false);
                     localStorage.setItem('id_token', object['token']);
                     this.auth.redirect();
                 },
-                error =>  {console.log(error)});
+                error =>  {
+                    this.loaderService.setVisible(false);
+                    this.notificationService.warning(JSON.stringify(error));
+                });
         return true;
     }
 }

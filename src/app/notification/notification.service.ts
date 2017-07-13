@@ -61,6 +61,6 @@ export class NotificationService {
     let notifications = this.notifications;
     setTimeout(function() {
       notifications[label] = undefined;
-    }, 6000);
+    }, 10000);
   }
 }

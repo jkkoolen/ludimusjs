@@ -1,6 +1,6 @@
 <div *ngIf="isSuccess() || isInfo() || isWarning() || isDanger()">
-  <div class="alert alert-success" role="alert" *ngIf="isSuccess()">{{getSuccessText()}}</div>
-  <div class="alert alert-info" role="alert" *ngIf="isInfo()">{{getInfoText()}}</div>
-  <div class="alert alert-warning" role="alert" *ngIf="isWarning()">{{getWarningText()}}</div>
-  <div class="alert alert-danger" role="alert" *ngIf="isDanger()">{{getDangerText()}}</div>
+  <div class="alert alert-success" *ngIf="isSuccess()">{{getSuccessText()}}</div>
+  <div class="alert alert-info" *ngIf="isInfo()">{{getInfoText()}}</div>
+  <div class="alert alert-warning" *ngIf="isWarning()">{{getWarningText()}}</div>
+  <div class="alert alert-danger" *ngIf="isDanger()">{{getDangerText()}}</div>
 </div>

@@ -1,59 +1,39 @@
-<div class="container">
-  <form>
-    <div class="form-group row">
-      <label for="period" class="col-xs-3 col-form-label">Period</label>
-      <div class="col-xs-9">
-        <select id="period" class="form-control" name="period" [(ngModel)]="period.choice"
-                (ngModelChange)="onChange($event)">
-          <option *ngFor="let p of period.values" [value]="p">{{p}}</option>
-        </select>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="from" class="col-xs-3 col-form-label">From</label>
-      <div class="col-xs-9">
-        <input class="form-control" [(ngModel)]="fromDate" name="fromDate" type="date" id="from" required
-               (ngModelChange)="onChange($event)">
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="to" class="col-xs-3 col-form-label">To</label>
-      <div class="col-xs-9">
-        <input class="form-control" [(ngModel)]="toDate" name="toDate" type="date" id="to" required
-               (ngModelChange)="onChange($event)">
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="period" class="col-xs-3 col-form-label">Rapporten</label>
-      <label class="radio-inline">
-        <input type="radio" [(ngModel)]="which.value" name="which" value="tax"> aangifte omzetbelasting
-      </label>
-      <label class="radio-inline">
-        <input type="radio" [(ngModel)]="which.value" name="which" value="tax-overview"> inkomste belasting
-      </label>
-      <label class="radio-inline">
-        <input type="radio" [(ngModel)]="which.value" name="which" value="default"> overzicht
-      </label>
-    </div>
-  </form>
-  <hr/>
-  <default-overview [tickets]="tickets" [onSelect]="onSelect.bind(this)"
-                    *ngIf="which.value === 'default'"></default-overview>
-  <tax-overview [tickets]="tickets" *ngIf="which.value === 'tax'"></tax-overview>
-  <income-tax-overview [tickets]="tickets" [getImageBase64]="getImageBase64.bind(this)"
-                       *ngIf="which.value === 'tax-overview'"></income-tax-overview>
-  <div id="myModal" class="modal" role="dialog">
-    <div class="modal-dialog">
+<md-card>
+    <form style="width: 400px">
+        <p>
+            <md-select class="full-width" placeholder="Periode" [(ngModel)]="period.choice" name="period"
+                       (ngModelChange)="onDateChange($event)">
+                <md-option *ngFor="let p of period.values" [value]="p">{{p}}</md-option>
+            </md-select>
+        </p>
+        <p>
+            <md-input-container class="full-width">
+                <input mdInput [mdDatepicker]="fromPicker" [(ngModel)]="fromDate" (ngModelChange)="onDateChange($event)"
+                       name="fromDate" placeholder="Vanaf datum">
+                <button mdSuffix [mdDatepickerToggle]="fromPicker"></button>
+            </md-input-container>
+            <md-datepicker #fromPicker></md-datepicker>
+        </p>
+        <p>
+            <md-input-container class="full-width">
+                <input mdInput [mdDatepicker]="toPicker" [(ngModel)]="toDate" (ngModelChange)="onDateChange($event)"
+                       name="toDate" placeholder="Vanaf datum">
+                <button mdSuffix [mdDatepickerToggle]="toPicker"></button>
+            </md-input-container>
+            <md-datepicker #toPicker></md-datepicker>
+        </p>
+        <p>
+            <md-radio-group class="full-width" [(ngModel)]="which.value" name="which">
+                <md-radio-button *ngFor="let r of reports" [value]="r">{{r}}</md-radio-button>
+            </md-radio-group>
+        </p>
+    </form>
+    <hr/>
+    <loader></loader>
 
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" (click)="doClose()">&times;</button>
-        </div>
-        <div class="modal-body" *ngIf="selectedTicket && selectedTicket.ticketImage">
-          <img src="{{getImageBase64(selectedTicket.ticketImage)}}" style="width:500px;"/>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+    <tax-overview *ngIf="which.value === 'tax'" [dataSource]="dataSource"></tax-overview>
+    <income-tax-overview *ngIf="which.value === 'tax-overview';" [dataSource]="dataSource"></income-tax-overview>
+    <default-overview *ngIf="which.value === 'default'" [dataSource]="dataSource"
+                      [onSelect]="onSelect.bind(this)"></default-overview>
+
+</md-card>

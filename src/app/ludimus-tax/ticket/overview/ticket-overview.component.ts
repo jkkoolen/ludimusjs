@@ -2,6 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {TicketService} from "../service/ticket.service";
 import {Ticket} from "../ticket.component";
 import {Period} from "../period.component";
+import {LoaderService} from "../../../loader/loader.service";
+import {NotificationService} from "../../../notification/notification.service";
+import {MdDialog, MdDialogConfig} from "@angular/material";
+import {ImageDialogComponent} from "./image-dialog.component";
+import {TicketDataSource, TicketDatabase} from "./ticket-database";
 
 @Component({
     selector: 'ticket-overview',
@@ -9,64 +14,56 @@ import {Period} from "../period.component";
     providers: [TicketService]
 })
 export class TicketOverviewComponent implements OnInit {
-    tickets: Ticket[];
     period:Period;
     selectedTicket: Ticket;
+    reports =  ['tax', 'tax-overview', 'default'];
     which: {value: string};
-    constructor(private ticketService: TicketService) {
+    ticketDatabase = new TicketDatabase(this.ticketService, this.loaderService, this.notificationService);
+    dataSource: TicketDataSource | null;
+    constructor(private ticketService: TicketService,
+                private loaderService: LoaderService,
+                private notificationService: NotificationService,
+                public dialog: MdDialog) {
         this.period = new Period();
+        this.dataSource = new TicketDataSource(this.ticketDatabase);
     }
+
     ngOnInit(): void {
-        this.requestTickets();
+        this.ticketDatabase.requestTickets(this.period);
         this.which = {value : 'default'};
     }
 
-    onChange(newValue) {
-      this.requestTickets();
+    onDateChange(newValue) {
+        this.ticketDatabase.requestTickets(this.period);
     }
 
-    requestTickets():void {
-          this.ticketService.getTickets(this.period.range.from, this.period.range.to).subscribe(
-              tickets => {this.tickets = tickets},
-              error => {
-                  console.log(error)
-              });
-    }
-
-    set fromDate(e:string){
-      if(e) {
-        let splitted = e.split('-');
-        this.period.from = new Date(Date.UTC(Number(splitted[0]), Number(splitted[1]) - 1, Number(splitted[2])));
+    set fromDate(date:Date){
+      if(date) {
+          this.period.from = date;
       }
     }
 
     get fromDate(){
-        return this.period.range.from.toISOString().substring(0, 10);
+        return this.period.range.from;
     }
 
-    set toDate(e:string) {
-      if (e) {
-        let splitted = e.split('-');
-        this.period.to = new Date(Date.UTC(Number(splitted[0]), Number(splitted[1]) - 1, Number(splitted[2])));
+    set toDate(date:Date) {
+      if (date) {
+        this.period.to = date;
       }
     }
 
     get toDate(){
-        return this.period.range.to.toISOString().substring(0, 10);
+        return this.period.range.to;
     }
 
     onSelect(ticket:Ticket) : void {
       this.selectedTicket = ticket;
       if (this.selectedTicket.ticketImage) {
-        document.querySelector('#myModal').setAttribute('style', 'display:block');
+          var dialogRef = this.dialog.open(ImageDialogComponent, <MdDialogConfig>{
+              data: this.selectedTicket
+          });
+          dialogRef.afterClosed().subscribe(console.log);
       }
-    }
-
-    doClose() :void {
-      document.querySelector('#myModal').setAttribute('style', 'display:none');
-    }
-
-    getImageBase64(data:any): string {
-        return 'data:image/jpg;base64,' + data;
     }
 }

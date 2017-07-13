@@ -1,64 +1,68 @@
-<div class="container">
-    <form (ngSubmit)="onSubmit($event)">
-        <div class="form-group row">
-            <label for="ticketDate" class="col-xs-3 col-form-label">Factuurdatum</label>
-            <div class="col-xs-9">
-                <input class="form-control" [(ngModel)]="ticketDate" name="ticketDate" type="date" id="ticketDate" required>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="incomeType" class="col-xs-3 col-form-label">Inkomen type</label>
-            <div class="col-xs-9">
-                <div class="custom-radio" id="incomeType">
-                    <label><input type="radio" [(ngModel)]="model.income" name="incomeType" [value]="true"> Inkomen</label>
-                    <label><input type="radio" [(ngModel)]="model.income" name="incomeType" [value]="false"> Uitgaven</label>
-                </div>
-            </div>
-        </div>
-        <div class="form-group row" *ngIf="model.income">
-            <label for="forMonth" class="col-xs-3 col-form-label">Inkomen voor welke maand</label>
-            <div class="col-xs-9">
-                <select id="forMonth" name="forMonth" [(ngModel)]="model.forMonth" class="form-control">
-                    <option *ngFor="let month of '0,1,2,3,4,5,6,7,8,9,10,11'.split(',')" [value]="month" (ngModelChange)="forMonthChanged()">{{monthLabel(month)}}</option>
-                </select>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="invoiceNumber" class="col-xs-3 col-form-label">Factuurnummer</label>
-            <div class="col-xs-9">
-                <input class="form-control" type="text" name="invoiceNumber" id="invoiceNumber" [(ngModel)]="model.invoiceNumber" required>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="description" class="col-xs-3 col-form-label">Omschrijving</label>
-            <div class="col-xs-9">
-                <textarea class="form-control" rows="3" name="description" id="description" [(ngModel)]="model.description" required></textarea>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="price" class="col-xs-3 col-form-label">Bedrag Ex. BTW</label>
-            <div class="col-xs-9">
-                <input class="form-control" type="number" step=".01" [(ngModel)]="model.price" name="price" id="price" required>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="vat" class="col-xs-3 col-form-label">Inkomen type</label>
-            <div class="col-xs-6">
-                <div class="custom-radio" id="vat">
-                    <label><input type="radio" [(ngModel)]="model.vatRate" name="vatRate" [value]="21"> 21 %</label>
-                    <label><input type="radio" [(ngModel)]="model.vatRate" name="vatRate" [value]="6"> 6 %</label>
-                    <label><input type="radio" [(ngModel)]="model.vatRate" name="vatRate" [value]="0"> 0 %</label>
-                </div>
-            </div>
-            <div class="col-xs-3" *ngIf="model.price">
-                BTW {{model.price * model.vatRate/100}}
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-xs-offset-3 btn btn-link" for="my-file-selector">
-                <input id="my-file-selector" type="file" name="ticketImage" (change)="onFileChange($event)" style="display:block;" required>
-            </label>
-        </div>
-        <button type="submit" class="btn btn-default">Ok</button>
-    </form>
-</div>
+<md-card>
+    <md-card-header>
+        <md-card-title>Please fill in this form</md-card-title>
+    </md-card-header>
+    <md-card-content>
+        <form (ngSubmit)="onSubmit($event)" style="width: 400px">
+            <p>
+                <md-input-container class="full-width">
+                    <input mdInput [mdDatepicker]="ticketDatePicker" [(ngModel)]="model.ticketDate" name="ticketDate"
+                           placeholder="Factuurdatum">
+                    <button mdSuffix [mdDatepickerToggle]="ticketDatePicker"></button>
+                    <md-datepicker #ticketDatePicker></md-datepicker>
+                </md-input-container>
+            </p>
+            <p>
+                <md-radio-group class="full-width" [(ngModel)]="model.income" name="incomeType">
+                    <md-radio-button [value]="true">Inkomen</md-radio-button>
+                    <md-radio-button [value]="false">Uitgave</md-radio-button>
+                </md-radio-group>
+            </p>
+            <p>
+                <md-select class="full-width" placeholder="Inkomen voor welke maand" *ngIf="model.income" [(ngModel)]="model.forMonth"
+                           name="forMonth" (ngModelChange)="forMonthChanged($event)">
+                    <md-option *ngFor="let month of '0,1,2,3,4,5,6,7,8,9,10,11'.split(',')" [value]="month">
+                        {{monthLabel(month)}}
+                    </md-option>
+                </md-select>
+            </p>
+            <p>
+                <md-input-container class="full-width">
+                    <input mdInput placeholder="Factuurnummer" [(ngModel)]="model.invoiceNumber" name="invoiceNumber" required>
+                </md-input-container>
+            </p>
+            <p>
+                <md-input-container class="full-width">
+                    <textarea mdInput placeholder="Omschrijving" [(ngModel)]="model.description" name="description"
+                              required></textarea>
+                </md-input-container>
+            </p>
+            <p>
+                <md-input-container class="full-width">
+                    <input mdInput type="number" step=".01" [(ngModel)]="model.price" name="price" required>
+                </md-input-container>
+            </p>
+            <p>
+                <md-radio-group class="full-width" [(ngModel)]="model.vatRate" name="vatRate">
+                    <md-radio-button [value]="21"> 21 %</md-radio-button>
+                    <md-radio-button [value]="6"> 6 %</md-radio-button>
+                    <md-radio-button [value]="0"> 0 %</md-radio-button>
+                </md-radio-group>
+                    <md-list *ngIf="model.price">
+                        BTW {{model.price * model.vatRate/100}}
+                    </md-list>
+            </p>
+            <p>
+                <label for="my-file-selector">
+                    <input class="full-width" id="my-file-selector" type="file" name="ticketImage" (change)="onFileChange($event)"
+                           style="display:block;" required>
+                </label>
+            </p>
+            <p>
+                <md-card-actions class="full-width">
+                    <button md-raised-button type="submit">Ok</button>
+                </md-card-actions>
+            </p>
+        </form>
+    </md-card-content>
+</md-card>

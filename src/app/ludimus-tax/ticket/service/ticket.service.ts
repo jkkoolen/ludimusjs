@@ -12,6 +12,7 @@ import {environment} from "../../../../environments/environment";
 @Injectable()
 export class TicketService {
     private url = environment.baseUrl + 'ludimus/';  // URL to web API
+    private TIMEOUT = 10000;
 
     constructor (private authHttp: AuthHttp) {
       window.console.log('url from environment is ', this.url);
@@ -22,14 +23,19 @@ export class TicketService {
     }
 
     reject(error: Response|any) {
-        return error.json() || {};
+        if (error.constructor.name === 'TimeoutError') {
+            return Observable.throw({error:"TIMEOUT_ERROR"});
+        }
+        return Observable.throw( error.json() || {});
     }
 
     getTickets(from:Date, to:Date): Observable<Ticket[]> {
         let params = new URLSearchParams();
         params.set('from', from.toISOString());
         params.set('to', to.toISOString());
+
         return this.authHttp.get(this.url + 'overview', {search:params})
+            .timeout(this.TIMEOUT)
             .map(this.resolve)
             .catch(this.reject);
     };
@@ -38,6 +44,7 @@ export class TicketService {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         return this.authHttp.post(this.url + 'addTicket', ticket, options)
+            .timeout(this.TIMEOUT)
             .map(this.resolve)
             .catch(this.reject);
     }
