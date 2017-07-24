@@ -10,6 +10,7 @@ import {NotificationComponent} from './notification/notification.component';
 import {NotificationService} from './notification/notification.service';
 import {AuthConfig, AuthHttp} from 'angular2-jwt';
 import {SharedModule} from "./shared.module";
+import {ChangeLoginFormComponent} from "./auth/login/changelogin-form.component";
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     return new AuthHttp( new AuthConfig({
@@ -29,7 +30,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         AppRoutingModule,
         SharedModule
     ],
-    declarations: [AppComponent, LoginFormComponent, HomeComponent, NotificationComponent],
+    declarations: [AppComponent, LoginFormComponent, ChangeLoginFormComponent, HomeComponent, NotificationComponent],
     providers: [
         AuthGuard,
         NotificationService,

@@ -8,11 +8,11 @@ import {Observable} from "rxjs";
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {tokenNotExpired} from 'angular2-jwt';
+import {AuthHttp, tokenNotExpired} from 'angular2-jwt';
 import {environment} from "../../environments/environment";
 
 import {Headers, RequestOptions, Response, Http} from "@angular/http";
-import {Login} from "./login/login.component";
+import {ChangeLogin, Login} from "./login/login.component";
 import {NotificationService} from "../notification/notification.service";
 
 @Injectable()
@@ -20,6 +20,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   private url = environment.baseUrl + 'ludimus/';  // URL to web API
   private redirectUrl:string;
   constructor(private http: Http,
+              private authHttp: AuthHttp,
               private router: Router,
               private notificationService:NotificationService) {}
 
@@ -37,6 +38,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   }
 
   reject(error: Response|any) {
+    this.logout();
     if (error.constructor.name === 'TimeoutError') {
       return Observable.throw({error:"TIMEOUT_ERROR"});
     }
@@ -47,6 +49,16 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     return this.http.post(this.url + 'login', login, options)
+        .timeout(8000)
+        .map(this.resolve)
+        .catch(this.reject);
+  }
+
+  changelogin (login: ChangeLogin): Observable<Object> {
+    this.redirectUrl = 'tax';
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.authHttp.post(this.url + 'changeLogin', login, options)
         .timeout(8000)
         .map(this.resolve)
         .catch(this.reject);

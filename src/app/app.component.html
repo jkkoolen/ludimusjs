@@ -3,10 +3,14 @@
     <notification></notification>
 </h3>
 <md-toolbar>
-    <button md-button [routerLink]="['home']"><md-icon>home</md-icon></button>
+    <button md-button [mdMenuTriggerFor]="homeMenu"><md-icon>dashboard</md-icon></button>
+    <md-menu #homeMenu="mdMenu">
+            <button md-menu-item [routerLink]="['home']"><md-icon>home</md-icon> Home</button>
+            <button md-menu-item [routerLink]="['changeLogin']" *ngIf="isLoggedIn()"><md-icon>build</md-icon> Change password</button>
+    </md-menu>
     <button md-button [mdMenuTriggerFor]="menu">Modulen</button>
     <md-menu #menu="mdMenu">
-        <button md-button [routerLink]="['tax']">Belasting</button>
+        <button md-menu-item [routerLink]="['tax']">Belasting</button>
     </md-menu>
 </md-toolbar>
 

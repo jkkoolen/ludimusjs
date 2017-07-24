@@ -1,8 +1,14 @@
 import { Component } from '@angular/core';
+import {AuthGuard} from "./auth/auth-guard.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.css']
 })
-export class AppComponent  { }
+export class AppComponent  {
+    constructor(private auth: AuthGuard) {}
+    isLoggedIn():boolean {
+        return this.auth.isLoggedIn();
+    }
+}
