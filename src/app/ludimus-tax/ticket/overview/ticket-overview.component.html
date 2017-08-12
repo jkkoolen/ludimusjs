@@ -23,7 +23,7 @@
             <md-datepicker #toPicker></md-datepicker>
         </p>
         <p>
-            <md-radio-group class="full-width" [(ngModel)]="which.value" name="which">
+            <md-radio-group class="full-width" [(ngModel)]="which" name="which">
                 <md-radio-button *ngFor="let r of reports" [value]="r">{{r}}</md-radio-button>
             </md-radio-group>
         </p>
@@ -31,9 +31,10 @@
     <hr/>
     <loader></loader>
 
-    <tax-overview *ngIf="which.value === 'tax'" [dataSource]="dataSource"></tax-overview>
-    <income-tax-overview *ngIf="which.value === 'tax-overview';" [dataSource]="dataSource"></income-tax-overview>
-    <default-overview *ngIf="which.value === 'default'" [dataSource]="dataSource"
+    <kmr-overview *ngIf="choice.value === 'kmr-overview'" [dataSource]="kmrDataSource"></kmr-overview>
+    <tax-overview *ngIf="choice.value === 'tax'" [dataSource]="ticketDataSource"></tax-overview>
+    <income-tax-overview *ngIf="choice.value === 'tax-overview';" [dataSource]="ticketDataSource"></income-tax-overview>
+    <default-overview *ngIf="choice.value === 'default'" [dataSource]="ticketDataSource"
                       [onSelect]="onSelect.bind(this)"></default-overview>
 
 </md-card>

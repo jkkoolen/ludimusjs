@@ -19,6 +19,12 @@
                 </md-radio-group>
             </p>
             <p>
+                <md-radio-group class="full-width" [(ngModel)]="model.carcost" name="carcostType">
+                    <md-radio-button [value]="true">Autokosten</md-radio-button>
+                    <md-radio-button [value]="false">Overige kosten</md-radio-button>
+                </md-radio-group>
+            </p>
+            <p>
                 <md-select class="full-width" placeholder="Inkomen voor welke maand" *ngIf="model.income" [(ngModel)]="model.forMonth"
                            name="forMonth" (ngModelChange)="forMonthChanged($event)">
                     <md-option *ngFor="let month of '0,1,2,3,4,5,6,7,8,9,10,11'.split(',')" [value]="month">
@@ -45,6 +51,7 @@
             <p>
                 <md-radio-group class="full-width" [(ngModel)]="model.vatRate" name="vatRate">
                     <md-radio-button [value]="21"> 21 %</md-radio-button>
+                    <md-radio-button [value]="20"> 20 %</md-radio-button>
                     <md-radio-button [value]="6"> 6 %</md-radio-button>
                     <md-radio-button [value]="0"> 0 %</md-radio-button>
                 </md-radio-group>

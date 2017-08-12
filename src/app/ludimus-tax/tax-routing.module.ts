@@ -9,6 +9,8 @@ import {TaxOverviewComponent} from "./ticket/overview/tax/tax-overview.component
 import {IncomeTaxOverviewComponent} from "./ticket/overview/income-tax/income-tax-overview.component";
 import {SharedModule} from "../shared.module";
 import {ImageDialogComponent} from "./ticket/overview/image-dialog.component";
+import {KmrComponent} from "Volumes/java/ludimusjs/src/app/ludimus-tax/ticket/kmr/kmr.component";
+import {KmrOverviewComponent} from "./ticket/overview/kmr/kmr-overview.component";
 
 const taxRoutes: Routes = [
   {
@@ -25,6 +27,11 @@ const taxRoutes: Routes = [
         path: 'addTicket',
         component: TicketFormComponent,
         canActivate: [AuthGuard]
+      },
+      {
+        path: 'kmr',
+        component: KmrComponent,
+        canActivate: [AuthGuard]
       }
     ]
   }
@@ -35,7 +42,7 @@ const taxRoutes: Routes = [
     SharedModule,
     RouterModule.forChild(taxRoutes)
   ],
-  declarations: [TaxComponent, TicketOverviewComponent, TicketFormComponent, DefaultOverviewComponent, TaxOverviewComponent, IncomeTaxOverviewComponent, ImageDialogComponent],
+  declarations: [TaxComponent, TicketOverviewComponent, TicketFormComponent, DefaultOverviewComponent, TaxOverviewComponent, IncomeTaxOverviewComponent, ImageDialogComponent, KmrComponent, KmrOverviewComponent],
   entryComponents: [ImageDialogComponent],
   exports: [
     RouterModule

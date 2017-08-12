@@ -4,6 +4,7 @@ import {TicketDataSource} from "../ticket-database";
 
 @Component({
   selector: 'income-tax-overview',
+  styleUrls: ['./income-tax-overview.component.css'],
   templateUrl: './income-tax-overview.component.html'
 })
 export class IncomeTaxOverviewComponent implements OnInit, OnDestroy {

@@ -1,0 +1,31 @@
+<div class="table-container mat-elevation-z8">
+<md-table [dataSource]="dataSource">
+  <ng-container cdkColumnDef="day">
+    <md-header-cell *cdkHeaderCellDef> Rit datum </md-header-cell>
+    <md-cell *cdkCellDef="let row"> {{row.day | date}} </md-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="origin">
+    <md-header-cell *cdkHeaderCellDef style="column-span: 3"> Vertek plaats </md-header-cell>
+    <md-cell *cdkCellDef="let row" style="column-span: 3"> {{row.origin}} </md-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="destination">
+    <md-header-cell *cdkHeaderCellDef style="column-span: 3"> Aankomst plaats </md-header-cell>
+    <md-cell *cdkCellDef="let row" style="column-span: 3"> {{row.destination}} </md-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="startTotal">
+    <md-header-cell *cdkHeaderCellDef>km stand aanvang</md-header-cell>
+    <md-cell *cdkCellDef="let row"> {{row.startTotal | number}} </md-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="endTotal">
+    <md-header-cell *cdkHeaderCellDef>km stand einde</md-header-cell>
+    <md-cell *cdkCellDef="let row"> {{row.endTotal | number }} </md-cell>
+  </ng-container>
+
+  <md-header-row *cdkHeaderRowDef="['day', 'origin', 'destination', 'startTotal', 'endTotal']"></md-header-row>
+  <md-row [ngStyle]="{backgroundColor:getColor(row.day)}" *cdkRowDef="let row; columns: ['day', 'origin', 'destination', 'startTotal', 'endTotal'];"></md-row>
+</md-table>
+</div>

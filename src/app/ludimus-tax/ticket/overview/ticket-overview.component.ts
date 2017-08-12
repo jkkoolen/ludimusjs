@@ -7,34 +7,51 @@ import {NotificationService} from "../../../notification/notification.service";
 import {MdDialog, MdDialogConfig} from "@angular/material";
 import {ImageDialogComponent} from "./image-dialog.component";
 import {TicketDataSource, TicketDatabase} from "./ticket-database";
+import {KmrDatabase, KmrDataSource} from "./kmr-database";
+import {KmrService} from "../service/kmr.service";
 
 @Component({
     selector: 'ticket-overview',
     templateUrl: 'ticket-overview.component.html' ,
-    providers: [TicketService]
+    providers: [TicketService, KmrService]
 })
 export class TicketOverviewComponent implements OnInit {
     period:Period;
     selectedTicket: Ticket;
-    reports =  ['tax', 'tax-overview', 'default'];
-    which: {value: string};
+    reports =  ['kmr-overview', 'tax', 'tax-overview', 'default'];
+    choice: {value: string};
     ticketDatabase = new TicketDatabase(this.ticketService, this.loaderService, this.notificationService);
-    dataSource: TicketDataSource | null;
+    ticketDataSource: TicketDataSource | null;
+    kmrDatabase = new KmrDatabase(this.kmrService, this.loaderService, this.notificationService);
+    kmrDataSource: KmrDataSource | null;
     constructor(private ticketService: TicketService,
+                private kmrService: KmrService,
                 private loaderService: LoaderService,
                 private notificationService: NotificationService,
                 public dialog: MdDialog) {
         this.period = new Period();
-        this.dataSource = new TicketDataSource(this.ticketDatabase);
+        this.ticketDataSource = new TicketDataSource(this.ticketDatabase);
+        this.kmrDataSource = new KmrDataSource(this.kmrDatabase);
+    }
+
+    set which(value: string) {
+        this.choice = {value : value};
+        localStorage.setItem('which', this.choice.value);
+    }
+
+    get which() : string {
+        return this.choice.value;
     }
 
     ngOnInit(): void {
         this.ticketDatabase.requestTickets(this.period);
-        this.which = {value : 'default'};
+        this.kmrDatabase.requestKmrs(this.period);
+        this.choice = {value : localStorage.getItem('which') || 'default'};
     }
 
     onDateChange(newValue) {
         this.ticketDatabase.requestTickets(this.period);
+        this.kmrDatabase.requestKmrs(this.period);
     }
 
     set fromDate(date:Date){

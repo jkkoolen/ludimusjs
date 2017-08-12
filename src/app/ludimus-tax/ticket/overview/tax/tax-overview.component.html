@@ -39,10 +39,10 @@
   <tr>
     <td>Totaal</td>
     <td>{{getDebitTotal() | currency:'EUR':true:'.0-2'}}</td>
-    <td>{{results.debit21 * .21 + results.debit6 * .06 | currency:'EUR':true:'.0-2'}}</td>
+    <td class="info">{{results.debit21 * .21 + results.debit6 * .06 | currency:'EUR':true:'.0-2'}}</td>
     <td>Totaal</td>
     <td>{{getCreditTotal() | currency:'EUR':true:'.0-2'}}</td>
-    <td>{{results.credit21 * .21 + results.credit6 * .06 | currency:'EUR':true:'.0-2'}}</td>
+    <td class="info">{{results.credit21 * .21 + results.credit6 * .06 | currency:'EUR':true:'.0-2'}}</td>
   </tr>
   </tbody>
 </table>

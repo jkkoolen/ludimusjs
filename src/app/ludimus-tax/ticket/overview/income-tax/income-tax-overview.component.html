@@ -1,6 +1,11 @@
-<div  *ngFor="let ticket of tickets" class="panel panel-default">
-  <div [ngClass]="{'bg-success' : ticket.income, 'bg-warning' : !ticket.income}">{{ticket.income ? 'Bij ' : 'Af ' }}{{ticket.price | currency:'EUR':true:'.0-2'}}</div>
-  <div class="panel-body" *ngIf="ticket.ticketImage">
+<md-card  *ngFor="let ticket of tickets" class="panel panel-default">
+  <md-card-header>
+    <md-card-title>
+        <div [ngClass]="{'valid' : ticket.income, 'invalid' : !ticket.income}">{{ticket.income ? 'Bij ' : 'Af ' }}{{ticket.price | currency:'EUR':true:'.0-2'}}</div>
+        <div *ngIf="ticket.carcost" class="valid">Autokosten</div>
+    </md-card-title>
+  </md-card-header>
+  <md-card-content *ngIf="ticket.ticketImage">
     <img src="{{'data:image/jpg;base64,' + ticket.ticketImage}}" style="width:90%"/>
-  </div>
-</div>
+  </md-card-content>
+</md-card>

@@ -1,9 +1,10 @@
-import {Component, Input, OnInit, OnChanges, OnDestroy} from '@angular/core';
+import {Component, Input, OnInit, OnDestroy} from '@angular/core';
 import {TicketDataSource} from "../ticket-database";
 import {Ticket} from "../../ticket.component";
 
 @Component({
   selector: 'tax-overview',
+  styleUrls: ['tax-overview.component.css'],
   templateUrl: './tax-overview.component.html'
 })
 export class TaxOverviewComponent implements OnInit, OnDestroy {
@@ -13,9 +14,6 @@ export class TaxOverviewComponent implements OnInit, OnDestroy {
   results: {debit21: number, credit21: number,
             debit6: number, credit6: number,
             debit0: number, credit0: number};
-
-  constructor() {
-  }
 
   ngOnInit(): void {
     this.dataSource.connect().subscribe(object=>{
