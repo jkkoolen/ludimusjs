@@ -21,6 +21,22 @@
     <td>{{results.credit21 * .21 | currency:'EUR':true:'.0-2'}}</td>
   </tr>
   <tr>
+    <td>BTW 20%</td>
+    <td>{{results.debit20 | currency:'EUR':true:'.0-2'}}</td>
+    <td>{{results.debit20 * .20 | currency:'EUR':true:'.0-2'}}</td>
+    <td>BTW 20%</td>
+    <td>{{results.credit20 | currency:'EUR':true:'.0-2'}}</td>
+    <td>{{results.credit20 * .20 | currency:'EUR':true:'.0-2'}}</td>
+  </tr>
+  <tr>
+    <td>BTW 19%</td>
+    <td>{{results.debit19 | currency:'EUR':true:'.0-2'}}</td>
+    <td>{{results.debit19 * .19 | currency:'EUR':true:'.0-2'}}</td>
+    <td>BTW 19%</td>
+    <td>{{results.credit19 | currency:'EUR':true:'.0-2'}}</td>
+    <td>{{results.credit19 * .19 | currency:'EUR':true:'.0-2'}}</td>
+  </tr>
+  <tr>
     <td>BTW 6%</td>
     <td>{{results.debit6 | currency:'EUR':true:'.0-2'}}</td>
     <td>{{results.debit6 * .06 | currency:'EUR':true:'.0-2'}}</td>
@@ -42,7 +58,7 @@
     <td class="info">{{results.debit21 * .21 + results.debit6 * .06 | currency:'EUR':true:'.0-2'}}</td>
     <td>Totaal</td>
     <td>{{getCreditTotal() | currency:'EUR':true:'.0-2'}}</td>
-    <td class="info">{{results.credit21 * .21 + results.credit6 * .06 | currency:'EUR':true:'.0-2'}}</td>
+    <td class="info">{{results.credit21 * .21 + results.credit20 * .20 + results.credit19 * .19 + results.credit6 * .06 | currency:'EUR':true:'.0-2'}}</td>
   </tr>
   </tbody>
 </table>
