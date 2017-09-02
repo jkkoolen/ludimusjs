@@ -11,7 +11,7 @@ import {NotificationService} from "../../../notification/notification.service";
 
 })
 export class KmrComponent {
-    private model = new Kmr();
+    model = new Kmr();
     constructor(private kmrService: KmrService,
                 private loaderService: LoaderService,
                 private notificationService: NotificationService){}

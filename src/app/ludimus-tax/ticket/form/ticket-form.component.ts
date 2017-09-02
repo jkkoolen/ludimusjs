@@ -3,6 +3,7 @@ import {TicketService} from '../service/ticket.service';
 import {Ticket} from '../ticket.component';
 import {NotificationService} from "../../../notification/notification.service";
 import {LoaderService} from "../../../loader/loader.service";
+import {DateAdapter} from "@angular/material";
 
 @Component({
     selector: 'ticket-form',
@@ -13,8 +14,9 @@ export class TicketFormComponent implements OnInit{
     model:Ticket;
     constructor(private ticketService: TicketService,
                 private loaderService: LoaderService,
-                private notificationService: NotificationService) {
-
+                private notificationService: NotificationService,
+                private dateAdapter: DateAdapter<Date>) {
+        this.dateAdapter.setLocale('nl');
     }
 
     ngOnInit(): void {
