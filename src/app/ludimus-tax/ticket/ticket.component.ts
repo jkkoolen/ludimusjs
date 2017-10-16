@@ -12,6 +12,8 @@ export class Ticket {
     income: boolean;
     carcost: boolean;
     forMonth: number;
+    depreciationYears: number;
+    yearOfEntry: number;
     constructor() {
         this.ticketDate = new Date();
         this.income = true;

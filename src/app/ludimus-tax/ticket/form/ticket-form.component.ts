@@ -27,6 +27,17 @@ export class TicketFormComponent implements OnInit{
         this.model.forMonth = value;
     }
 
+    showTaxDepreciation() {
+        if(!this.model.income && !this.model.carcost) {
+            this.model.yearOfEntry = new Date().getFullYear();
+            this.model.depreciationYears = 5;
+            return true;
+        }
+        this.model.yearOfEntry = undefined;
+        this.model.depreciationYears = undefined;
+        return false;
+    }
+
     monthLabel(month):string {
         switch (month) {
             case '0' : return 'Januari';

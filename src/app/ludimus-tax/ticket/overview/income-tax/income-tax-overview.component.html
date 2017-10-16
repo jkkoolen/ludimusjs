@@ -1,11 +1,32 @@
+<md-card>
+    <md-card-header>
+        <md-card-title>Samenvatting</md-card-title>
+    </md-card-header>
+    <md-card-content>
+        <table>
+            <tr>
+                <th>Totaal inkomen</th>
+                <th>Totaal uitgaven</th>
+                <th>Totaal</th>
+            </tr>
+            <tr>
+                <td>{{totalIncome | currency:'EUR' :true:'.2' }}</td>
+                <td>{{totalExpense | currency:'EUR' :true:'.2'}}</td>
+                <td>{{totalIncome + totalExpense | currency:'EUR' :true:'.2'}}</td>
+            </tr>
+        </table>
+    </md-card-content>
+</md-card>
+<hr>
 <md-card  *ngFor="let ticket of tickets" class="panel panel-default">
   <md-card-header>
     <md-card-title>
-        <div [ngClass]="{'valid' : ticket.income, 'invalid' : !ticket.income}">{{ticket.income ? 'Bij ' : 'Af ' }}{{ticket.price | currency:'EUR':true:'.0-2'}}</div>
-        <div *ngIf="ticket.carcost" class="valid">Autokosten</div>
+        <div [ngClass]="{'income' : ticket.income, 'expends' : !ticket.income}">{{ticket.income ? 'Bij ' : 'Af ' }}{{ticket.depreciationYears ? '1/' + ticket.depreciationYears + ' gedeelte van ' + ticket.price + ' = ' : ''}}{{yearPrice(ticket) | currency:'EUR':true:'.2'}}</div>
+        <div *ngIf="ticket.carcost" class="income">Autokosten</div>
     </md-card-title>
   </md-card-header>
   <md-card-content *ngIf="ticket.ticketImage">
     <img src="{{'data:image/jpg;base64,' + ticket.ticketImage}}" style="width:90%"/>
   </md-card-content>
 </md-card>
+

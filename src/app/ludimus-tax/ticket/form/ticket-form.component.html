@@ -18,11 +18,19 @@
                     <md-radio-button [value]="false">Uitgave</md-radio-button>
                 </md-radio-group>
             </p>
-            <p>
+            <p *ngIf="!model.income">
                 <md-radio-group class="full-width" [(ngModel)]="model.carcost" name="carcostType">
                     <md-radio-button [value]="true">Autokosten</md-radio-button>
                     <md-radio-button [value]="false">Overige kosten</md-radio-button>
                 </md-radio-group>
+            </p>
+            <p *ngIf="showTaxDepreciation()">
+                <md-input-container class="full-width" style="padding-left: 40px">
+                    <input mdInput placeholder="Aanschafjaar" type="number" [(ngModel)]="model.yearOfEntry" name="yearOfEntry">
+                </md-input-container>
+                <md-input-container class="full-width" style="padding-left: 40px">
+                    <input mdInput placeholder="Jaren waarover wordt afgeschreven" type="number" [(ngModel)]="model.depreciationYears" name="depreciationYears">
+                </md-input-container>
             </p>
             <p>
                 <md-select class="full-width" placeholder="Inkomen voor welke maand" *ngIf="model.income" [(ngModel)]="model.forMonth"

@@ -15,8 +15,6 @@ export class TicketDatabase {
                 private notificationService: NotificationService) {
     }
 
-
-    /** Adds a new user to the database. */
     requestTickets(period: Period) {
         this.loaderService.setVisible(true);
         this.ticketService.getTickets(period.range.from, period.range.to).subscribe(
