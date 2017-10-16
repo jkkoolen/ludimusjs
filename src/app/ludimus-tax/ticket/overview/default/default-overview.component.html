@@ -7,7 +7,7 @@
 
   <ng-container cdkColumnDef="income">
     <md-header-cell *cdkHeaderCellDef> Bij/Af </md-header-cell>
-    <md-cell *cdkCellDef="let row"> {{row.incomes ? 'Bij' : 'Af'}}</md-cell>
+    <md-cell *cdkCellDef="let row"> {{row.income ? 'Bij' : 'Af'}}</md-cell>
   </ng-container>
 
   <ng-container cdkColumnDef="ticketDate">
@@ -31,6 +31,6 @@
   </ng-container>
 
   <md-header-row *cdkHeaderRowDef="['invoiceNumber', 'income', 'ticketDate', 'description', 'price', 'vatRate']"></md-header-row>
-  <md-row [ngStyle]="{backgroundColor:row.incomes ? '#aaffaa' : '#ffaaaa'}" *cdkRowDef="let row; columns: ['invoiceNumber', 'income', 'ticketDate', 'description', 'price', 'vatRate'];"></md-row>
+  <md-row [ngStyle]="{backgroundColor:row.income ? '#aaffaa' : '#ffaaaa'}" *cdkRowDef="let row; columns: ['invoiceNumber', 'income', 'ticketDate', 'description', 'price', 'vatRate'];"></md-row>
 </md-table>
 </div>

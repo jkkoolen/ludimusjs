@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from "@angular/router";
 import {TicketOverviewComponent} from "./ticket/overview/ticket-overview.component";
 import {TicketFormComponent} from "./ticket/form/ticket-form.component";
@@ -9,43 +9,44 @@ import {TaxOverviewComponent} from "./ticket/overview/tax/tax-overview.component
 import {IncomeTaxOverviewComponent} from "./ticket/overview/income-tax/income-tax-overview.component";
 import {SharedModule} from "../shared.module";
 import {ImageDialogComponent} from "./ticket/overview/image-dialog.component";
-import {KmrComponent} from "Volumes/java/ludimusjs/src/app/ludimus-tax/ticket/kmr/kmr.component";
+import {KmrComponent} from "./ticket/kmr/kmr.component";
 import {KmrOverviewComponent} from "./ticket/overview/kmr/kmr-overview.component";
 
 const taxRoutes: Routes = [
-  {
-    path: 'tax',
-    component: TaxComponent,
-    canActivate:[AuthGuard],
-    children: [
-      {
-        path: 'overview',
-        component: TicketOverviewComponent,
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'addTicket',
-        component: TicketFormComponent,
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'kmr',
-        component: KmrComponent,
-        canActivate: [AuthGuard]
-      }
-    ]
-  }
+    {
+        path: 'tax',
+        component: TaxComponent,
+        canActivate: [AuthGuard],
+        children: [
+            {
+                path: 'overview',
+                component: TicketOverviewComponent,
+                canActivate: [AuthGuard]
+            },
+            {
+                path: 'addTicket',
+                component: TicketFormComponent,
+                canActivate: [AuthGuard]
+            },
+            {
+                path: 'kmr',
+                component: KmrComponent,
+                canActivate: [AuthGuard]
+            }
+        ]
+    }
 ];
 
 @NgModule({
-  imports: [
-    SharedModule,
-    RouterModule.forChild(taxRoutes)
-  ],
-  declarations: [TaxComponent, TicketOverviewComponent, TicketFormComponent, DefaultOverviewComponent, TaxOverviewComponent, IncomeTaxOverviewComponent, ImageDialogComponent, KmrComponent, KmrOverviewComponent],
-  entryComponents: [ImageDialogComponent],
-  exports: [
-    RouterModule
-  ]
+    imports: [
+        SharedModule,
+        RouterModule.forChild(taxRoutes)
+    ],
+    declarations: [TaxComponent, TicketOverviewComponent, TicketFormComponent, DefaultOverviewComponent, TaxOverviewComponent, IncomeTaxOverviewComponent, ImageDialogComponent, KmrComponent, KmrOverviewComponent],
+    entryComponents: [ImageDialogComponent],
+    exports: [
+        RouterModule
+    ]
 })
-export class TaxRoutingModule { }
+export class TaxRoutingModule {
+}
