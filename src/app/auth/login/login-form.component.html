@@ -1,24 +1,23 @@
-<md-card>
-    <md-card-header>
-        <md-card-title>Please login first</md-card-title>
-    </md-card-header>
-    <md-card-content>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Please login first</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
         <form (ngSubmit)="onSubmit($event)" style="width: 400px">
             <p>
-                <md-input-container class="full-width">
-                    <input mdInput placeholder="email" [(ngModel)]="model.email" name="email" required>
-                </md-input-container>
+                <mat-input-container class="full-width">
+                    <input matInput placeholder="email" [(ngModel)]="model.email" name="email" required>
+                </mat-input-container>
             </p>
             <p>
-                <md-input-container class="full-width">
-                    <input mdInput placeholder="Password" [(ngModel)]="model.password" name="password" type="password"
+                <mat-input-container class="full-width">
+                    <input matInput placeholder="Password" [(ngModel)]="model.password" name="password" type="password"
                            required>
-                </md-input-container>
+                </mat-input-container>
             </p>
             <p>
-                <button md-raised-button type="submit">Ok</button>
+                <button mat-raised-button type="submit">Ok</button>
             </p>
         </form>
-    </md-card-content>
-</md-card>
-<loader></loader>
+    </mat-card-content>
+</mat-card>

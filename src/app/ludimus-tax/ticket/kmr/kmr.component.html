@@ -1,43 +1,43 @@
-<md-card>
-    <md-card-header>
-        <md-card-title>registreer je kilometers</md-card-title>
-    </md-card-header>
-    <md-card-content>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>registreer je kilometers</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
         <form (ngSubmit)="onSubmit($event)" style="width: 400px">
             <p>
-                <md-input-container class="full-width">
-                    <input mdInput [mdDatepicker]="todayDatePicker" [(ngModel)]="model.day" name="today"
+                <mat-input-container class="full-width">
+                    <input matInput [matDatepicker]="todayDatePicker" [(ngModel)]="model.day" name="today"
                            placeholder="datum rit">
-                    <button mdSuffix [mdDatepickerToggle]="todayDatePicker"></button>
-                    <md-datepicker #todayDatePicker></md-datepicker>
-                </md-input-container>
+                    <mat-datepicker-toggle matSuffix [for]="todayDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #todayDatePicker></mat-datepicker>
+                </mat-input-container>
             </p>
             <p>
-                <md-input-container class="full-width">
-                    <input mdInput placeholder="Vanaf" [(ngModel)]="model.origin" name="from" required>
-                </md-input-container>
-                <md-input-container class="full-width">
-                    <input mdInput placeholder="Bestemming" [(ngModel)]="model.destination" name="to" required>
-                </md-input-container>
+                <mat-input-container class="full-width">
+                    <input matInput placeholder="Vanaf" [(ngModel)]="model.origin" name="from" required>
+                </mat-input-container>
+                <mat-input-container class="full-width">
+                    <input matInput placeholder="Bestemming" [(ngModel)]="model.destination" name="to" required>
+                </mat-input-container>
             </p>
             <p>
-                <md-input-container class="full-width">
-                    <input mdInput placeholder="Eindstand" [(ngModel)]="model.endTotal" name="endTotal" type="number" required>
-                </md-input-container>
+                <mat-input-container class="full-width">
+                    <input matInput placeholder="Eindstand" [(ngModel)]="model.endTotal" name="endTotal" type="number" required>
+                </mat-input-container>
 
             </p>
             <p>
-                <md-radio-group class="full-width" [(ngModel)]="model.isBusiness" name="isBusiness">
-                    <md-radio-button [value]=true> Zakelijk</md-radio-button>
-                    <md-radio-button [value]=false> Prive</md-radio-button>
-                </md-radio-group>
+                <mat-radio-group class="full-width" [(ngModel)]="model.isBusiness" name="isBusiness">
+                    <mat-radio-button [value]=true> Zakelijk</mat-radio-button>
+                    <mat-radio-button [value]=false> Prive</mat-radio-button>
+                </mat-radio-group>
             </p>
             <p>
-                <md-card-actions class="full-width">
-                    <button md-raised-button type="submit">Ok</button>
-                </md-card-actions>
+                <mat-card-actions class="full-width">
+                    <button mat-raised-button type="submit">Ok</button>
+                </mat-card-actions>
             </p>
 
         </form>
-    </md-card-content>
-</md-card>
+    </mat-card-content>
+</mat-card>

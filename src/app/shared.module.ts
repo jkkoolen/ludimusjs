@@ -4,53 +4,58 @@ import {LoaderComponent} from "./loader/loader.component";
 import {FormsModule} from "@angular/forms";
 import {BrowserModule} from "@angular/platform-browser";
 import {CommonModule} from "@angular/common";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {
-    MdButtonModule, MdRadioModule, MdInputModule, MdCardModule, MdMenuModule,
-    MdToolbarModule, MdIconModule, MdSelectModule, MdDatepickerModule, MdNativeDateModule, MdDialogModule, MdTableModule
+    MatButtonModule, MatRadioModule, MatInputModule, MatCardModule, MatMenuModule,
+    MatToolbarModule, MatIconModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatDialogModule, MatTableModule, MatCheckboxModule
 } from "@angular/material";
-import {CdkTableModule} from "@angular/cdk";
+import {CdkTableModule} from '@angular/cdk/table';
+import {TimeoutInterceptor} from "./ludimus-tax/ticket/service/timeout.service";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
 
 @NgModule({
     imports: [
         FormsModule,
         BrowserModule,
         CommonModule,
-        BrowserAnimationsModule,
-        MdCardModule,
-        MdToolbarModule,
-        MdIconModule,
-        MdMenuModule,
-        MdInputModule,
-        MdButtonModule,
-        MdSelectModule,
-        MdRadioModule,
-        MdDatepickerModule,
-        MdNativeDateModule,
-        MdDialogModule,
-        MdTableModule,
-        CdkTableModule
+        NoopAnimationsModule,
+        MatCardModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatMenuModule,
+        MatInputModule,
+        MatButtonModule,
+        MatSelectModule,
+        MatRadioModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatDialogModule,
+        MatTableModule,
+        CdkTableModule,
+        MatCheckboxModule
     ],
     declarations: [LoaderComponent],
     providers: [
+        [{ provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true }],
         LoaderService,
     ],
     exports: [FormsModule,
         BrowserModule,
         CommonModule,
         LoaderComponent,
-        MdCardModule,
-        MdToolbarModule,
-        MdIconModule,
-        MdMenuModule,
-        MdInputModule,
-        MdButtonModule,
-        MdSelectModule,
-        MdRadioModule,
-        MdDatepickerModule,
-        MdNativeDateModule,
-        MdDialogModule,
-        MdTableModule,
-        CdkTableModule]
+        MatCardModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatMenuModule,
+        MatInputModule,
+        MatButtonModule,
+        MatSelectModule,
+        MatRadioModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatDialogModule,
+        MatTableModule,
+        CdkTableModule,
+        MatCheckboxModule]
 })
 export class SharedModule {}

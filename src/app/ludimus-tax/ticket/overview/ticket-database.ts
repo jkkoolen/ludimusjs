@@ -1,10 +1,10 @@
 import {BehaviorSubject, Observable} from "rxjs";
-import {Ticket} from "../ticket.component";
+import {Ticket} from "../model/ticket.component";
 import {TicketService} from "../service/ticket.service";
-import {Period} from "../period.component";
+import {Period} from "../model/period.component";
 import {LoaderService} from "../../../loader/loader.service";
 import {NotificationService} from "../../../notification/notification.service";
-import {DataSource} from "@angular/cdk";
+import {DataSource} from "@angular/cdk/collections";
 
 export class TicketDatabase {
     dataChange: BehaviorSubject<Ticket[]> = new BehaviorSubject<Ticket[]>([]);
@@ -24,7 +24,7 @@ export class TicketDatabase {
             },
             error => {
                 this.loaderService.setVisible(false);
-                this.notificationService.danger(JSON.stringify(error));
+                this.notificationService.danger(error.code);
             });
     }
 }

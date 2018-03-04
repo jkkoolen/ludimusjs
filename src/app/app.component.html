@@ -1,17 +1,20 @@
 <h3>
-    Ludimus. 1.0.5
-    <notification></notification>
+    Ludimus. 1.0.6
 </h3>
-<md-toolbar>
-    <button md-button [mdMenuTriggerFor]="homeMenu"><md-icon>dashboard</md-icon></button>
-    <md-menu #homeMenu="mdMenu">
-            <button md-menu-item [routerLink]="['home']"><md-icon>home</md-icon> Home</button>
-            <button md-menu-item [routerLink]="['changeLogin']" *ngIf="isLoggedIn()"><md-icon>build</md-icon> Change password</button>
-    </md-menu>
-    <button md-button [mdMenuTriggerFor]="menu">Modulen</button>
-    <md-menu #menu="mdMenu">
-        <button md-menu-item [routerLink]="['tax']">Belasting</button>
-    </md-menu>
-</md-toolbar>
+<mat-toolbar>
+    <button mat-button [matMenuTriggerFor]="homeMenu"><mat-icon>dashboard</mat-icon></button>
+    <mat-menu #homeMenu="matMenu">
+            <button mat-menu-item [routerLink]="['home']"><mat-icon>home</mat-icon> Home</button>
+            <button mat-menu-item [routerLink]="['changeLogin']" *ngIf="isLoggedIn()"><mat-icon>build</mat-icon> Change password</button>
+    </mat-menu>
+    <button mat-button [matMenuTriggerFor]="menu">Modulen</button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item [routerLink]="['tax']">Belasting</button>
+    </mat-menu>
 
-<router-outlet></router-outlet>
+</mat-toolbar>
+
+<router-outlet>
+</router-outlet>
+<loader></loader>
+<notification></notification>

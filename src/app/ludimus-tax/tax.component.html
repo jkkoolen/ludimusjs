@@ -1,12 +1,12 @@
-<md-toolbar>
-    <button md-button [mdMenuTriggerFor]="menu">Factuur</button>
-    <md-menu #menu="mdMenu">
-        <button md-menu-item [routerLink]="['addTicket']">Opvoeren factuur</button>
-        <button md-menu-item [routerLink]="['overview']">Rapporten</button>
-    </md-menu>
-    <button md-button [mdMenuTriggerFor]="kmrmenu">Kilometer registratie</button>
-    <md-menu #kmrmenu="mdMenu">
-        <button md-menu-item [routerLink]="['kmr']">Opvoeren registratie</button>
-    </md-menu>
-</md-toolbar>
+<mat-toolbar>
+    <button mat-button [matMenuTriggerFor]="menu">Factuur</button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item [routerLink]="['addTicket']">Opvoeren factuur</button>
+        <button mat-menu-item [routerLink]="['overview']">Rapporten</button>
+    </mat-menu>
+    <button mat-button [matMenuTriggerFor]="kmrmenu">Kilometer registratie</button>
+    <mat-menu #kmrmenu="matMenu">
+        <button mat-menu-item [routerLink]="['kmr']">Opvoeren registratie</button>
+    </mat-menu>
+</mat-toolbar>
 <router-outlet></router-outlet>

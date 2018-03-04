@@ -1,84 +1,95 @@
-<md-card>
-    <md-card-header>
-        <md-card-title>Please fill in this form</md-card-title>
-    </md-card-header>
-    <md-card-content>
-        <form (ngSubmit)="onSubmit($event)" style="width: 400px">
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Vul hieronder de gegevens in</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form (ngSubmit)="onSubmit($event)" style="width: 400px"  #ticketForm="ngForm">
             <p>
-                <md-input-container class="full-width">
-                    <input mdInput [mdDatepicker]="ticketDatePicker" [(ngModel)]="model.ticketDate" name="ticketDate"
+                <mat-input-container class="full-width">
+                    <input matInput [matDatepicker]="ticketDatePicker" [(ngModel)]="model.ticketDate" name="ticketDate"
                            placeholder="Factuurdatum">
-                    <button mdSuffix [mdDatepickerToggle]="ticketDatePicker"></button>
-                    <md-datepicker #ticketDatePicker></md-datepicker>
-                </md-input-container>
+                    <mat-datepicker-toggle matSuffix [for]="ticketDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #ticketDatePicker></mat-datepicker>
+                </mat-input-container>
             </p>
             <p>
-                <md-radio-group class="full-width" [(ngModel)]="model.income" name="incomeType">
-                    <md-radio-button [value]="true">Inkomen</md-radio-button>
-                    <md-radio-button [value]="false">Uitgave</md-radio-button>
-                </md-radio-group>
+                <mat-radio-group class="full-width" [(ngModel)]="model.income" name="incomeType">
+                    <mat-radio-button [value]="true">Inkomen</mat-radio-button>
+                    <mat-radio-button [value]="false">Uitgave</mat-radio-button>
+                </mat-radio-group>
             </p>
             <p *ngIf="!model.income">
-                <md-radio-group class="full-width" [(ngModel)]="model.carcost" name="carcostType">
-                    <md-radio-button [value]="true">Autokosten</md-radio-button>
-                    <md-radio-button [value]="false">Overige kosten</md-radio-button>
-                </md-radio-group>
+                <mat-radio-group class="full-width" [(ngModel)]="model.carcost" name="carcostType">
+                    <mat-radio-button [value]="true">Autokosten</mat-radio-button>
+                    <mat-radio-button [value]="false">Overige kosten</mat-radio-button>
+                </mat-radio-group>
             </p>
             <p *ngIf="showTaxDepreciation()">
-                <md-input-container class="full-width" style="padding-left: 40px">
-                    <input mdInput placeholder="Aanschafjaar" type="number" [(ngModel)]="model.yearOfEntry" name="yearOfEntry">
-                </md-input-container>
-                <md-input-container class="full-width" style="padding-left: 40px">
-                    <input mdInput placeholder="Jaren waarover wordt afgeschreven" type="number" [(ngModel)]="model.depreciationYears" name="depreciationYears">
-                </md-input-container>
+                <mat-input-container class="full-width" style="padding-left: 40px">
+                    <input matInput placeholder="Aanschafjaar" type="number" [(ngModel)]="model.yearOfEntry" name="yearOfEntry">
+                </mat-input-container>
+                <mat-input-container class="full-width" style="padding-left: 40px">
+                    <input matInput placeholder="Jaren waarover wordt afgeschreven" type="number" [(ngModel)]="model.depreciationYears" name="depreciationYears">
+                </mat-input-container>
             </p>
             <p>
-                <md-select class="full-width" placeholder="Inkomen voor welke maand" *ngIf="model.income" [(ngModel)]="model.forMonth"
+                <mat-select class="full-width" placeholder="Inkomen voor welke maand" *ngIf="model.income" [(ngModel)]="model.forMonth"
                            name="forMonth" (ngModelChange)="forMonthChanged($event)">
-                    <md-option *ngFor="let month of '0,1,2,3,4,5,6,7,8,9,10,11'.split(',')" [value]="month">
+                    <mat-option *ngFor="let month of '0,1,2,3,4,5,6,7,8,9,10,11'.split(',')" [value]="month">
                         {{monthLabel(month)}}
-                    </md-option>
-                </md-select>
+                    </mat-option>
+                </mat-select>
             </p>
             <p>
-                <md-input-container class="full-width">
-                    <input mdInput placeholder="Factuurnummer" [(ngModel)]="model.invoiceNumber" name="invoiceNumber" required>
-                </md-input-container>
+                <mat-input-container class="full-width">
+                    <input matInput placeholder="Factuurnummer" [(ngModel)]="model.invoiceNumber" name="invoiceNumber" required>
+                </mat-input-container>
             </p>
             <p>
-                <md-input-container class="full-width">
-                    <textarea mdInput placeholder="Omschrijving" [(ngModel)]="model.description" name="description"
+                <mat-input-container class="full-width">
+                    <textarea matInput placeholder="Omschrijving" [(ngModel)]="model.description" name="description"
                               required></textarea>
-                </md-input-container>
+                </mat-input-container>
             </p>
             <p>
-                <md-input-container class="full-width">
-                    <input mdInput type="number" step=".01" [(ngModel)]="model.price" name="price" required>
-                </md-input-container>
+                <mat-input-container class="full-width">
+                    <input matInput type="number" step=".01" [(ngModel)]="model.price" name="price" required>
+                </mat-input-container>
             </p>
             <p>
-                <md-radio-group class="full-width" [(ngModel)]="model.vatRate" name="vatRate">
-                    <md-radio-button [value]="21"> 21 %</md-radio-button>
-                    <md-radio-button [value]="20"> 20 %</md-radio-button>
-                    <md-radio-button [value]="19"> 19 %</md-radio-button>
-                    <md-radio-button [value]="6"> 6 %</md-radio-button>
-                    <md-radio-button [value]="0"> 0 %</md-radio-button>
-                </md-radio-group>
-                    <md-list *ngIf="model.price">
+                <mat-radio-group class="full-width" [(ngModel)]="model.vatRate" name="vatRate">
+                    <mat-radio-button [value]="21"> 21 %</mat-radio-button>
+                    <mat-radio-button [value]="20"> 20 %</mat-radio-button>
+                    <mat-radio-button [value]="19"> 19 %</mat-radio-button>
+                    <mat-radio-button [value]="6"> 6 %</mat-radio-button>
+                    <mat-radio-button [value]="0"> 0 %</mat-radio-button>
+                </mat-radio-group>
+                    <mat-label *ngIf="model.price">
                         BTW {{model.price * model.vatRate/100}}
-                    </md-list>
+                    </mat-label>
             </p>
             <p>
+                <mat-checkbox [(ngModel)]="model.useGoogleDrive" name="useGoogleDrive" (change)="onGoogleDriveChange($event)">Use Google Drive File?</mat-checkbox>
+            </p>
+            <p *ngIf="model.useGoogleDrive">
+                <mat-select *ngIf="googlefiles" class="full-width" placeholder="Google File"  [(ngModel)]="model.googleFile"
+                            name="googlefile" >
+                    <mat-option *ngFor="let file of googlefiles" [value]="file">
+                        {{file.name}}
+                    </mat-option>
+                </mat-select>
+            </p>
+            <p *ngIf="!model.useGoogleDrive">
                 <label for="my-file-selector">
                     <input class="full-width" id="my-file-selector" type="file" name="ticketImage" (change)="onFileChange($event)"
-                           style="display:block;" required>
+                           style="display:block;">
                 </label>
             </p>
             <p>
-                <md-card-actions class="full-width">
-                    <button md-raised-button type="submit">Ok</button>
-                </md-card-actions>
+                <mat-card-actions class="full-width">
+                    <button mat-raised-button type="submit" [disabled]="!ticketForm.form.valid">Ok</button>
+                </mat-card-actions>
             </p>
         </form>
-    </md-card-content>
-</md-card>
+    </mat-card-content>
+</mat-card>

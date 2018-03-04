@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, OnDestroy} from '@angular/core';
 import {TicketDataSource} from "../ticket-database";
-import {Ticket} from "../../ticket.component";
+import {Ticket} from "../../model/ticket.component";
 
 @Component({
   selector: 'tax-overview',

@@ -1,40 +1,39 @@
-<md-card>
+<mat-card>
     <form style="width: 400px">
         <p>
-            <md-select class="full-width" placeholder="Periode" [(ngModel)]="period.choice" name="period"
+            <mat-select class="full-width" placeholder="Periode" [(ngModel)]="period.choice" name="period"
                        (ngModelChange)="onDateChange($event)">
-                <md-option *ngFor="let p of period.values" [value]="p">{{p}}</md-option>
-            </md-select>
+                <mat-option *ngFor="let p of period.values" [value]="p">{{p}}</mat-option>
+            </mat-select>
         </p>
         <p>
-            <md-input-container class="full-width">
-                <input mdInput [mdDatepicker]="fromPicker" [(ngModel)]="fromDate" (ngModelChange)="onDateChange($event)"
+            <mat-input-container class="full-width">
+                <input matInput [matDatepicker]="fromPicker" [(ngModel)]="fromDate" (ngModelChange)="onDateChange($event)"
                        name="fromDate" placeholder="Vanaf datum">
-                <button mdSuffix [mdDatepickerToggle]="fromPicker"></button>
-            </md-input-container>
-            <md-datepicker #fromPicker></md-datepicker>
+                <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+            </mat-input-container>
+            <mat-datepicker #fromPicker></mat-datepicker>
         </p>
         <p>
-            <md-input-container class="full-width">
-                <input mdInput [mdDatepicker]="toPicker" [(ngModel)]="toDate" (ngModelChange)="onDateChange($event)"
+            <mat-input-container class="full-width">
+                <input matInput [matDatepicker]="toPicker" [(ngModel)]="toDate" (ngModelChange)="onDateChange($event)"
                        name="toDate" placeholder="Vanaf datum">
-                <button mdSuffix [mdDatepickerToggle]="toPicker"></button>
-            </md-input-container>
-            <md-datepicker #toPicker></md-datepicker>
+                <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+            </mat-input-container>
+            <mat-datepicker #toPicker></mat-datepicker>
         </p>
         <p>
-            <md-radio-group class="full-width" [(ngModel)]="which" name="which">
-                <md-radio-button *ngFor="let r of reports" [value]="r">{{r}}</md-radio-button>
-            </md-radio-group>
+            <mat-radio-group class="full-width" [(ngModel)]="which" name="which">
+                <mat-radio-button *ngFor="let r of reports" [value]="r">{{r}}</mat-radio-button>
+            </mat-radio-group>
         </p>
     </form>
     <hr/>
-    <loader></loader>
 
     <kmr-overview *ngIf="choice.value === 'kmr-overview'" [dataSource]="kmrDataSource"></kmr-overview>
     <tax-overview *ngIf="choice.value === 'tax'" [dataSource]="ticketDataSource"></tax-overview>
     <income-tax-overview *ngIf="choice.value === 'tax-overview';" [dataSource]="ticketDataSource"></income-tax-overview>
     <default-overview *ngIf="choice.value === 'default'" [dataSource]="ticketDataSource"
-                      [onSelect]="onSelect.bind(this)"></default-overview>
+                      [onSelect]="onSelectCallBack"></default-overview>
 
-</md-card>
+</mat-card>

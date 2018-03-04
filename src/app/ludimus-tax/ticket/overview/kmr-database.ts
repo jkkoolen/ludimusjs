@@ -1,10 +1,11 @@
-import {BehaviorSubject, Observable} from "rxjs";
 import {KmrService} from "../service/kmr.service";
-import {Period} from "../period.component";
+import {Period} from "../model/period.component";
 import {LoaderService} from "../../../loader/loader.service";
 import {NotificationService} from "../../../notification/notification.service";
-import {DataSource} from "@angular/cdk";
 import {Kmr} from "../kmr/distance.component";
+import {DataSource} from "@angular/cdk/collections";
+import {Observable} from "rxjs/Observable";
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 export class KmrDatabase {
     dataChange: BehaviorSubject<Kmr[]> = new BehaviorSubject<Kmr[]>([]);
@@ -26,7 +27,7 @@ export class KmrDatabase {
             },
             error => {
                 this.loaderService.setVisible(false);
-                this.notificationService.danger(JSON.stringify(error));
+                this.notificationService.danger(error.code);
             });
     }
 }

@@ -1,3 +1,5 @@
+import {GoogleFile} from "./googlefile.component";
+
 export class Ticket {
     id: number;
     lastUpdated: Date;
@@ -14,7 +16,10 @@ export class Ticket {
     forMonth: number;
     depreciationYears: number;
     yearOfEntry: number;
+    useGoogleDrive: boolean;
+    googleFile: GoogleFile;
     constructor() {
+        this.useGoogleDrive = false;
         this.ticketDate = new Date();
         this.income = true;
         this.carcost = false;

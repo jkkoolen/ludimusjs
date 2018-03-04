@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {TicketService} from '../service/ticket.service';
-import {Ticket} from '../ticket.component';
+import {Ticket} from '../model/ticket.component';
 import {NotificationService} from "../../../notification/notification.service";
 import {LoaderService} from "../../../loader/loader.service";
-import {DateAdapter} from "@angular/material";
+import {DateAdapter, MatCheckboxChange} from "@angular/material";
+import {GoogleFile} from "../model/googlefile.component";
 
 @Component({
     selector: 'ticket-form',
@@ -11,6 +12,7 @@ import {DateAdapter} from "@angular/material";
     providers: [TicketService]
 })
 export class TicketFormComponent implements OnInit{
+    googlefiles: GoogleFile[];
     model:Ticket;
     constructor(private ticketService: TicketService,
                 private loaderService: LoaderService,
@@ -84,8 +86,23 @@ export class TicketFormComponent implements OnInit{
                 },
                 error =>  {
                     this.loaderService.setVisible(false);
-                    this.notificationService.danger(JSON.stringify(error));
+                    this.notificationService.danger(error.code);
                 });
         return true;
+    }
+
+    onGoogleDriveChange($event: MatCheckboxChange) {
+        if($event.checked) {
+            this.loaderService.setVisible(true);
+            this.ticketService.getFilesUploadedInTheLast7Days().subscribe(
+                 result =>  {
+                     this.loaderService.setVisible(false);
+                     this.googlefiles = result;
+                 }, error => {
+                    this.loaderService.setVisible(false);
+                    this.notificationService.danger(error.code);
+                })
+        }
+
     }
 }

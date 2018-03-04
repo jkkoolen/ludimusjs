@@ -11,7 +11,7 @@ export class NotificationService {
   }
 
   info(message:string) {
-    this.notifications['info'] = message;
+      this.notifications['info'] = message;
     this.removeAfterTimeout('info');
   }
 

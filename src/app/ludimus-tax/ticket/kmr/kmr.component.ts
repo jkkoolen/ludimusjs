@@ -37,7 +37,7 @@ export class KmrComponent {
                           },
                           error =>  {
                               this.loaderService.setVisible(false);
-                              this.notificationService.danger(JSON.stringify(error));
+                              this.notificationService.danger(error.code);
                           });
                 }
             },

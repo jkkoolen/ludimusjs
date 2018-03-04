@@ -1,5 +1,5 @@
 import {Component, Input, OnInit, OnDestroy} from '@angular/core';
-import {Ticket} from "../../ticket.component";
+import {Ticket} from "../../model/ticket.component";
 import {TicketDataSource} from "../ticket-database";
 
 @Component({

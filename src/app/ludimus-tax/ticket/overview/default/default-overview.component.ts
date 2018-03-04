@@ -1,6 +1,5 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy} from '@angular/core';
 import {TicketDataSource} from "../ticket-database";
-import {setInterval} from "timers";
 
 @Component({
   selector: 'default-overview',
