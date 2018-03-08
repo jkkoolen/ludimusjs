@@ -49,6 +49,14 @@ export class TicketService {
             .catch(this.reject);
     }
 
+    deleteTicket(ticketId: number) : Observable<Boolean> {
+        let params = new HttpParams()
+            .set('ticketId', '' + ticketId);
+        return this.http.delete(this.url + 'deleteTicket', {params:params})
+            .map(this.resolve)
+            .catch(this.reject);
+    }
+
     getFilesUploadedInTheLast7Days(): Observable<GoogleFile[]> {
         let params = new HttpParams()
             .set('dayCount', '7');

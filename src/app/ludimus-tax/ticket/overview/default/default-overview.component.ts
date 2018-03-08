@@ -10,6 +10,8 @@ export class DefaultOverviewComponent implements OnDestroy {
   @Input()
   onSelect: Function;
   @Input()
+  onDelete: Function;
+  @Input()
   dataSource: TicketDataSource;
 
   ngOnDestroy(): void {

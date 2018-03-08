@@ -1,5 +1,10 @@
 <div class="table-container mat-elevation-z8">
 <mat-table [dataSource]="dataSource">
+  <ng-container cdkColumnDef="remove">
+    <mat-header-cell *cdkHeaderCellDef> Verwijder </mat-header-cell>
+    <mat-cell *cdkCellDef="let row" style="cursor: pointer" (click)="onDelete(row)"> X </mat-cell>
+  </ng-container>
+
   <ng-container cdkColumnDef="invoiceNumber">
     <mat-header-cell *cdkHeaderCellDef> Factuurnummer </mat-header-cell>
     <mat-cell *cdkCellDef="let row" style="text-decoration:underline;cursor: pointer" (click)="onSelect(row)"> {{row.invoiceNumber}} </mat-cell>
@@ -30,7 +35,7 @@
     <mat-cell *cdkCellDef="let row"> {{row.vatRate}} </mat-cell>
   </ng-container>
 
-  <mat-header-row *cdkHeaderRowDef="['invoiceNumber', 'income', 'ticketDate', 'description', 'price', 'vatRate']"></mat-header-row>
-  <mat-row [ngStyle]="{backgroundColor:row.income ? '#aaffaa' : '#ffaaaa'}" *cdkRowDef="let row; columns: ['invoiceNumber', 'income', 'ticketDate', 'description', 'price', 'vatRate'];"></mat-row>
+  <mat-header-row *cdkHeaderRowDef="['remove', 'invoiceNumber', 'income', 'ticketDate', 'description', 'price', 'vatRate']"></mat-header-row>
+  <mat-row [ngStyle]="{backgroundColor:row.income ? '#aaffaa' : '#ffaaaa'}" *cdkRowDef="let row; columns: ['remove', 'invoiceNumber', 'income', 'ticketDate', 'description', 'price', 'vatRate'];"></mat-row>
 </mat-table>
 </div>

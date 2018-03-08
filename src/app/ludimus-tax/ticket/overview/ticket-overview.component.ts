@@ -9,6 +9,7 @@ import {ImageDialogComponent} from "./image-dialog.component";
 import {TicketDataSource, TicketDatabase} from "./ticket-database";
 import {KmrDatabase, KmrDataSource} from "./kmr-database";
 import {KmrService} from "../service/kmr.service";
+import {ConfirmDialogComponent} from "./confirm-dialog.component";
 
 @Component({
     selector: 'ticket-overview',
@@ -17,6 +18,7 @@ import {KmrService} from "../service/kmr.service";
 })
 export class TicketOverviewComponent implements OnInit {
     onSelectCallBack : Function;
+    onDeleteCallBack : Function;
     period:Period;
     selectedTicket: Ticket;
     reports =  ['kmr-overview', 'tax', 'tax-overview', 'default'];
@@ -51,9 +53,10 @@ export class TicketOverviewComponent implements OnInit {
         this.kmrDatabase.requestKmrs(this.period);
         this.choice = {value : localStorage.getItem('which') || 'default'};
         this.onSelectCallBack = this.onSelect.bind(this);
+        this.onDeleteCallBack = this.onDelete.bind(this);
     }
 
-    onDateChange(newValue) {
+    onDateChange() {
         this.ticketDatabase.requestTickets(this.period);
         this.kmrDatabase.requestKmrs(this.period);
     }
@@ -86,5 +89,18 @@ export class TicketOverviewComponent implements OnInit {
           });
           dialogRef.afterClosed().subscribe(console.log);
       }
+    }
+
+    private onDelete(ticket:Ticket) : void {
+        var dialogRef = this.dialog.open(ConfirmDialogComponent, {
+            width: '250px'
+        });
+        dialogRef.componentInstance.onConfirm.subscribe(() => {
+            this.ticketService.deleteTicket(ticket.id)
+                .subscribe(
+                    result  => {
+                        this.onDateChange();
+                    });
+        });
     }
 }

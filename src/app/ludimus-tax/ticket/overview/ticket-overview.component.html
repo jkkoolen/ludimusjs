@@ -2,13 +2,13 @@
     <form style="width: 400px">
         <p>
             <mat-select class="full-width" placeholder="Periode" [(ngModel)]="period.choice" name="period"
-                       (ngModelChange)="onDateChange($event)">
+                       (ngModelChange)="onDateChange()">
                 <mat-option *ngFor="let p of period.values" [value]="p">{{p}}</mat-option>
             </mat-select>
         </p>
         <p>
             <mat-input-container class="full-width">
-                <input matInput [matDatepicker]="fromPicker" [(ngModel)]="fromDate" (ngModelChange)="onDateChange($event)"
+                <input matInput [matDatepicker]="fromPicker" [(ngModel)]="fromDate" (ngModelChange)="onDateChange()"
                        name="fromDate" placeholder="Vanaf datum">
                 <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
             </mat-input-container>
@@ -16,7 +16,7 @@
         </p>
         <p>
             <mat-input-container class="full-width">
-                <input matInput [matDatepicker]="toPicker" [(ngModel)]="toDate" (ngModelChange)="onDateChange($event)"
+                <input matInput [matDatepicker]="toPicker" [(ngModel)]="toDate" (ngModelChange)="onDateChange()"
                        name="toDate" placeholder="Vanaf datum">
                 <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
             </mat-input-container>
@@ -34,6 +34,6 @@
     <tax-overview *ngIf="choice.value === 'tax'" [dataSource]="ticketDataSource"></tax-overview>
     <income-tax-overview *ngIf="choice.value === 'tax-overview';" [dataSource]="ticketDataSource"></income-tax-overview>
     <default-overview *ngIf="choice.value === 'default'" [dataSource]="ticketDataSource"
-                      [onSelect]="onSelectCallBack"></default-overview>
+                      [onSelect]="onSelectCallBack" [onDelete]="onDeleteCallBack"></default-overview>
 
 </mat-card>

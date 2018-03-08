@@ -11,6 +11,7 @@ import {SharedModule} from "../shared.module";
 import {ImageDialogComponent} from "./ticket/overview/image-dialog.component";
 import {KmrComponent} from "./ticket/kmr/kmr.component";
 import {KmrOverviewComponent} from "./ticket/overview/kmr/kmr-overview.component";
+import {ConfirmDialogComponent} from "./ticket/overview/confirm-dialog.component";
 
 const taxRoutes: Routes = [
     {
@@ -42,8 +43,10 @@ const taxRoutes: Routes = [
         SharedModule,
         RouterModule.forChild(taxRoutes)
     ],
-    declarations: [TaxComponent, TicketOverviewComponent, TicketFormComponent, DefaultOverviewComponent, TaxOverviewComponent, IncomeTaxOverviewComponent, ImageDialogComponent, KmrComponent, KmrOverviewComponent],
-    entryComponents: [ImageDialogComponent],
+    declarations: [TaxComponent, TicketOverviewComponent, TicketFormComponent, DefaultOverviewComponent,
+        TaxOverviewComponent, IncomeTaxOverviewComponent, ImageDialogComponent, KmrComponent, KmrOverviewComponent,
+        ConfirmDialogComponent],
+    entryComponents: [ImageDialogComponent, ConfirmDialogComponent],
     exports: [
         RouterModule
     ]
