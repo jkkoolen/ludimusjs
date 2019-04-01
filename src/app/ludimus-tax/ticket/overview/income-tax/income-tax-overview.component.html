@@ -10,9 +10,9 @@
                 <th>Totaal</th>
             </tr>
             <tr>
-                <td>{{totalIncome | currency:'EUR' :true:'.2' }}</td>
-                <td>{{totalExpense | currency:'EUR' :true:'.2'}}</td>
-                <td>{{totalIncome + totalExpense | currency:'EUR' :true:'.2'}}</td>
+                <td>{{totalIncome | currency:'EUR' :'symbol':'.2' }}</td>
+                <td>{{totalExpense | currency:'EUR' :'symbol':'.2'}}</td>
+                <td>{{totalIncome + totalExpense | currency:'EUR' :'symbol':'.2'}}</td>
             </tr>
         </table>
     </mat-card-content>
@@ -21,12 +21,12 @@
 <mat-card  *ngFor="let ticket of tickets" class="panel panel-default">
   <mat-card-header>
     <mat-card-title>
-        <div [ngClass]="{'income' : ticket.income, 'expends' : !ticket.income}">{{ticket.income ? 'Bij ' : 'Af ' }}{{ticket.depreciationYears ? '1/' + ticket.depreciationYears + ' gedeelte van ' + ticket.price + ' = ' : ''}}{{yearPrice(ticket) | currency:'EUR':true:'.2'}}</div>
+        <div [ngClass]="{'income' : ticket.income, 'expends' : !ticket.income}">{{ticket.income ? 'Bij ' : 'Af ' }}{{ticket.depreciationYears ? '1/' + ticket.depreciationYears + ' gedeelte van ' + ticket.price + ' = ' : ''}}{{yearPrice(ticket) | currency:'EUR':'symbol':'.2'}}</div>
         <div *ngIf="ticket.carcost" class="income">Autokosten</div>
     </mat-card-title>
   </mat-card-header>
-  <mat-card-content *ngIf="ticket.ticketImage">
-    <img src="{{'data:image/jpg;base64,' + ticket.ticketImage}}" style="width:90%"/>
+  <mat-card-content>
+    <img src="{{images[ticket.id]}}" style="width:90%"/>
   </mat-card-content>
 </mat-card>
 

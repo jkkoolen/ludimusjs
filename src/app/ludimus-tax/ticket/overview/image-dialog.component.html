@@ -1,4 +1,4 @@
 <h1 mat-dialog-title>Bonnetje</h1>
-<div mat-dialog-content *ngIf="data && data.ticketImage">
-    <img src="{{'data:image/jpg;base64,' + data.ticketImage}}"/>
+<div mat-dialog-content *ngIf="base64">
+    <img src="{{base64}}"/>
 </div>

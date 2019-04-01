@@ -43,7 +43,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
         if (error.constructor.name === 'TimeoutError') {
             return Observable.throw({code:"TIMEOUT", message: "Response could not be retrieved within the timeout"});
         }
-        return Observable.throw(error || {});
+        return Observable.throw(error || {message: "Unknown Error!"});
     }
 
     login(login: Login): Observable<Object> {
@@ -64,7 +64,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
                 'Content-Type': 'application/json',
             })
         };
-        return this.http.post(this.url + 'changeLogin', login, httpOptions)
+        return this.http.post(this.url + 'secure/changeLogin', login, httpOptions)
             .map(this.resolve)
             .catch(this.reject);
     }

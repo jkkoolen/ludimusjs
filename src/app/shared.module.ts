@@ -3,7 +3,7 @@ import {LoaderService} from "./loader/loader.service";
 import {LoaderComponent} from "./loader/loader.component";
 import {FormsModule} from "@angular/forms";
 import {BrowserModule} from "@angular/platform-browser";
-import {CommonModule} from "@angular/common";
+import {CommonModule, DatePipe} from "@angular/common";
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {
     MatButtonModule, MatRadioModule, MatInputModule, MatCardModule, MatMenuModule,
@@ -36,6 +36,7 @@ import {HTTP_INTERCEPTORS} from "@angular/common/http";
     ],
     declarations: [LoaderComponent],
     providers: [
+        DatePipe,
         [{ provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true }],
         LoaderService,
     ],

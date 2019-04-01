@@ -3,8 +3,12 @@ import {TicketService} from '../service/ticket.service';
 import {Ticket} from '../model/ticket.component';
 import {NotificationService} from "../../../notification/notification.service";
 import {LoaderService} from "../../../loader/loader.service";
-import {DateAdapter, MatCheckboxChange} from "@angular/material";
+import {DateAdapter, MatCheckboxChange, MatSelectChange} from "@angular/material";
 import {GoogleFile} from "../model/googlefile.component";
+import {DatePipe} from "@angular/common";
+import {JKDriveFile} from "../model/jkdrivefile.component";
+
+const DATE_FORMAT: string = 'yyyy-MM-dd';
 
 @Component({
     selector: 'ticket-form',
@@ -13,16 +17,20 @@ import {GoogleFile} from "../model/googlefile.component";
 })
 export class TicketFormComponent implements OnInit{
     googlefiles: GoogleFile[];
+    jkdrivefiles: JKDriveFile[];
+    ticketAsText: string;
     model:Ticket;
+    ticketDate: Date;
     constructor(private ticketService: TicketService,
                 private loaderService: LoaderService,
                 private notificationService: NotificationService,
-                private dateAdapter: DateAdapter<Date>) {
+                private dateAdapter: DateAdapter<Date>,
+                private datePipe : DatePipe) {
         this.dateAdapter.setLocale('nl');
     }
 
     ngOnInit(): void {
-        this.model  = new Ticket();
+        this.resetModel();
     }
 
     forMonthChanged(value):void {
@@ -76,23 +84,25 @@ export class TicketFormComponent implements OnInit{
 
     onSubmit(event:Event) {
         event.preventDefault();
+        this.model.ticketDate = this.datePipe.transform(this.ticketDate, DATE_FORMAT);
         this.loaderService.setVisible(true);
         this.ticketService.addTicket(this.model).
             subscribe(
                 ticket  => {
                     this.loaderService.setVisible(false);
                     this.notificationService.success("Invoice stored successfull");
-                    this.model = new Ticket();
+                    this.resetModel();
                 },
                 error =>  {
                     this.loaderService.setVisible(false);
-                    this.notificationService.danger(error.code);
+                    this.notificationService.danger('Error occured : ' + error.message);
                 });
         return true;
     }
 
     onGoogleDriveChange($event: MatCheckboxChange) {
         if($event.checked) {
+            this.model.useJKDrive = false;
             this.loaderService.setVisible(true);
             this.ticketService.getFilesUploadedInTheLast7Days().subscribe(
                  result =>  {
@@ -100,9 +110,42 @@ export class TicketFormComponent implements OnInit{
                      this.googlefiles = result;
                  }, error => {
                     this.loaderService.setVisible(false);
-                    this.notificationService.danger(error.code);
+                    this.notificationService.danger(error.message);
                 })
         }
+    }
+
+    onJKDriveChange($event: MatCheckboxChange) {
+        if($event.checked) {
+            this.model.useGoogleDrive = false;
+            this.loaderService.setVisible(true);
+            this.ticketService.getJKDriveFiles().subscribe(
+                result =>  {
+                    this.loaderService.setVisible(false);
+                    this.jkdrivefiles = result;
+                }, error => {
+                    this.loaderService.setVisible(false);
+                    this.notificationService.danger(error.message);
+                })
+
+        }
+    }
+
+    resetModel() {
+        this.model  = new Ticket(this.datePipe);
+    }
+
+    onJKDriveFileChange($event: JKDriveFile) {
+        this.loaderService.setVisible(true);
+        this.ticketService.tesseract($event.fileDownloadUri).subscribe(
+            result => {
+                this.loaderService.setVisible(false);
+                this.ticketAsText = result;
+                console.log(this.ticketAsText);
+            }, error => {
+                this.loaderService.setVisible(false);
+                this.notificationService.danger(error.message);
+            })
 
     }
 }

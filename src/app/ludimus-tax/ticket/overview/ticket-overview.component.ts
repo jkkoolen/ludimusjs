@@ -49,16 +49,22 @@ export class TicketOverviewComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.ticketDatabase.requestTickets(this.period);
-        this.kmrDatabase.requestKmrs(this.period);
         this.choice = {value : localStorage.getItem('which') || 'default'};
+        this.requestOverviewData();
         this.onSelectCallBack = this.onSelect.bind(this);
         this.onDeleteCallBack = this.onDelete.bind(this);
     }
 
     onDateChange() {
-        this.ticketDatabase.requestTickets(this.period);
-        this.kmrDatabase.requestKmrs(this.period);
+        this.requestOverviewData();
+    }
+
+    requestOverviewData() {
+        if(this.choice.value === 'kmr-overview') {
+            this.kmrDatabase.requestKmrs(this.period);
+        } else {
+            this.ticketDatabase.requestTickets(this.period);
+        }
     }
 
     set fromDate(date:Date){
@@ -82,13 +88,26 @@ export class TicketOverviewComponent implements OnInit {
     }
 
      private onSelect(ticket:Ticket) : void {
-      this.selectedTicket = ticket;
-      if (this.selectedTicket.ticketImage) {
-          var dialogRef = this.dialog.open(ImageDialogComponent, <MatDialogConfig>{
-              data: this.selectedTicket
-          });
-          dialogRef.afterClosed().subscribe(console.log);
-      }
+         console.log('onselect');
+         this.selectedTicket = ticket;
+      this.ticketService.getTicketImage(ticket.id)
+          .subscribe(
+              result => {
+                  this.readAsFile(result);
+              }
+          );
+    }
+
+    private readAsFile(blob: Blob): void {
+        const dialog = this.dialog;
+        var reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = function() {
+            const dialogRef = dialog.open(ImageDialogComponent, <MatDialogConfig>{
+                data: reader.result
+            });
+            dialogRef.afterClosed().subscribe(console.log);
+        };
     }
 
     private onDelete(ticket:Ticket) : void {

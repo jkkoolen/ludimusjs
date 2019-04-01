@@ -1,10 +1,12 @@
 import {GoogleFile} from "./googlefile.component";
+import {DatePipe} from "@angular/common";
+import {JKDriveFile} from "./jkdrivefile.component";
+
+const DATE_FORMAT: string = 'yyyy-MM-dd';
 
 export class Ticket {
     id: number;
-    lastUpdated: Date;
-    created: Date;
-    ticketDate: Date;
+    ticketDate: string;
     invoiceNumber: string;
     description: string;
     price: number;
@@ -18,12 +20,17 @@ export class Ticket {
     yearOfEntry: number;
     useGoogleDrive: boolean;
     googleFile: GoogleFile;
-    constructor() {
+    useJKDrive: boolean;
+    jkdriveFile: JKDriveFile;
+
+    constructor(private datePipe : DatePipe) {
+        this.useJKDrive = false;
         this.useGoogleDrive = false;
-        this.ticketDate = new Date();
+        const date = new Date();
+        this.ticketDate = datePipe.transform(date, DATE_FORMAT);
         this.income = true;
         this.carcost = false;
         this.vatRate = 21;
-        this.forMonth = this.ticketDate.getMonth() > 0 ? this.ticketDate.getMonth() - 1: 11;
+        this.forMonth = date.getMonth() > 0 ? date.getMonth() - 1: 11;
     }
 }

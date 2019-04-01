@@ -10,7 +10,7 @@ import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 
 @Injectable()
 export class KmrService {
-    private url = environment.baseUrl + 'ludimus/';  // URL to web API
+    private url = environment.baseUrl + 'ludimus/secure/';  // URL to web API
 
     constructor (private http: HttpClient) {
     }

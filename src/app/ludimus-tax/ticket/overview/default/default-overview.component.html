@@ -27,7 +27,7 @@
 
   <ng-container cdkColumnDef="price">
     <mat-header-cell *cdkHeaderCellDef>Bedrag</mat-header-cell>
-    <mat-cell *cdkCellDef="let row"> {{row.price | currency:'EUR':true }} </mat-cell>
+    <mat-cell *cdkCellDef="let row"> {{row.price | currency:'EUR':'symbol' }} </mat-cell>
   </ng-container>
 
   <ng-container cdkColumnDef="vatRate">

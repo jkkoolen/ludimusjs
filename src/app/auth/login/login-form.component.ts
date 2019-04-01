@@ -28,7 +28,7 @@ export class LoginFormComponent {
                 },
                 error =>  {
                     this.loaderService.setVisible(false);
-                    this.notificationService.warning(error.code);
+                    this.notificationService.warning(error.message);
                 });
         return true;
     }

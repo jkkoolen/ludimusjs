@@ -6,7 +6,7 @@
         <form (ngSubmit)="onSubmit($event)" style="width: 400px"  #ticketForm="ngForm">
             <p>
                 <mat-input-container class="full-width">
-                    <input matInput [matDatepicker]="ticketDatePicker" [(ngModel)]="model.ticketDate" name="ticketDate"
+                    <input matInput [matDatepicker]="ticketDatePicker" [(ngModel)]="ticketDate" name="ticketDate"
                            placeholder="Factuurdatum">
                     <mat-datepicker-toggle matSuffix [for]="ticketDatePicker"></mat-datepicker-toggle>
                     <mat-datepicker #ticketDatePicker></mat-datepicker>
@@ -71,6 +71,9 @@
             <p>
                 <mat-checkbox [(ngModel)]="model.useGoogleDrive" name="useGoogleDrive" (change)="onGoogleDriveChange($event)">Use Google Drive File?</mat-checkbox>
             </p>
+            <p>
+                <mat-checkbox [(ngModel)]="model.useJKDrive" name="useJKDrive" (change)="onJKDriveChange($event)">Use JK Drive File?</mat-checkbox>
+            </p>
             <p *ngIf="model.useGoogleDrive">
                 <mat-select *ngIf="googlefiles" class="full-width" placeholder="Google File"  [(ngModel)]="model.googleFile"
                             name="googlefile" >
@@ -79,7 +82,15 @@
                     </mat-option>
                 </mat-select>
             </p>
-            <p *ngIf="!model.useGoogleDrive">
+            <p *ngIf="model.useJKDrive">
+                <mat-select *ngIf="jkdrivefiles" class="full-width" placeholder="JKDrive File"  [(ngModel)]="model.jkdriveFile"
+                            name="jkdrivefile" (ngModelChange)="onJKDriveFileChange($event)">
+                    <mat-option *ngFor="let file of jkdrivefiles" [value]="file">
+                        {{file.fileName}}
+                    </mat-option>
+                </mat-select>
+            </p>
+            <p *ngIf="!model.useGoogleDrive && !model.useJKDrive">
                 <label for="my-file-selector">
                     <input class="full-width" id="my-file-selector" type="file" name="ticketImage" (change)="onFileChange($event)"
                            style="display:block;">

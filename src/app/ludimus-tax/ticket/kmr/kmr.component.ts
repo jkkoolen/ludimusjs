@@ -26,7 +26,6 @@ export class KmrComponent {
                 this.model.destination = response.destination_addresses.join(':');
                 if(this.isOk(response)) {
                   this.model.startTotal = this.model.endTotal - (response.rows[0].elements[0].distance.value/1000);
-                  console.log('kmr model ', this.model);
                     this.loaderService.setVisible(true);
                     this.kmrService.saveDistance(this.model)
                         .subscribe(
